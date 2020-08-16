@@ -1,6 +1,9 @@
-.DS_Store
+git .DS_Store
+/backend/node_modules
 node_modules
+/backend/user.*
 /dist
+
 
 
 # local env files
@@ -14,7 +17,7 @@ yarn-error.log*
 pnpm-debug.log*
 
 # Editor directories and files
-.idea
+../.idea
 .vscode
 *.suo
 *.ntvs*
