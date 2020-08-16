@@ -1,4 +1,4 @@
-# frontend
+# cvbank
 
 ## Project setup
 ```
