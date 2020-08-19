@@ -28,9 +28,13 @@
 </template>
 <script>
     export default {
+        name: 'mypage',
+        data() {
+            return {};
+        }
     }
 </script>
-<style lang="scss" scoped>
+<style>
     .event-single {
         margin-top: 30px;
     }
