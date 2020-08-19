@@ -7,7 +7,7 @@
 
             <div class="login-form">
                 <div class="control-group">
-                    <input v-model="input.name" type="text" class="login-field" value="" placeholder="användarnamn" id="login-name">
+                    <input v-model="input.name" type="text" class="login-field" value="" placeholder="email" id="login-name">
                     <label class="login-field-icon fui-user" for="login-name"></label>
                 </div>
 
@@ -18,7 +18,7 @@
 
                 <button @click="postData" class="btn btn-primary btn-large btn-block">Logga in</button>
                 <br>
-                <router-link to="/register">Vill du registrera dig </router-link>
+                <router-link to="/loginAd">Är du an administrator?Klicka här! </router-link>
 
             </div>
         </div>
@@ -47,7 +47,7 @@
                         headers: {"Content-Type": "application/json"},
                         body: JSON.stringify({user: this.input.name, pass: this.input.password})
                     };
-                    const response = await fetch("http://uquiz.myddns.me:3000/api/users/login", requestOptions);
+                    const response = await fetch("http://localhost:3000/api/users/login", requestOptions);
                     const data = await response.json();
 
                     if (data.length === 0) {
@@ -64,9 +64,7 @@
             },
         },
 
-        mounted() {
-            this.$parent.footerPos = 'fixed';
-        }
+
     }
 </script>
 

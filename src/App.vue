@@ -6,18 +6,25 @@
           <div class="logo-box">
             <img src="./assets/logo.svg" alt="Logo" class="logo-img">
           </div>
-      </div>
+          </div>
     </section>
 
 
     <section class="item3">
     <div class="item3-body">
- <login></login>
+        <div id="nav">
+
+            <router-link v-if="authenticated" to="/mypage" replace>Min sida</router-link>
+            <router-link v-if="authenticated" to="/mypage" v-on:click.native="logout()" replace>Logga ut</router-link>
+            <hr>
+        </div>
+
+        <router-view @authenticated="setAuthenticated" @user="setUser" />
     </div>
     </section>
 
 
-    <section class="item4">
+    <section class="item5">
       <div class="item4-body">
         <p>Copyright (c) 2020 by Tugb, Aisha, Husam .</p>
       </div>
@@ -25,6 +32,45 @@
 
   </div>
 </template>
+
+<script>
+    export default {
+        name: 'app',
+        components: {
+
+        },
+
+        data() {
+            return {
+                authenticated: false,
+                user: null,
+
+            }
+        },
+
+        mounted() {
+            if(!this.authenticated) {
+                this.$router.replace({ name: "home" });
+            }
+
+        },
+
+        methods: {
+            setAuthenticated(status) {
+                this.authenticated = status;
+            },
+            setUser(id){
+                this.user = id;
+            },
+            logout() {
+                this.authenticated = false;
+                this.setUser(null);
+                this.$router.push({path: '/'})
+            }
+        }
+    }
+
+</script>
 
 <style>
 #app {
@@ -104,11 +150,17 @@
   background-color: #662246;
   color: #FFFFFF;
 }
+a {
+    color: darkslategrey;
+    font-weight: bolder;
+    text-decoration: none;
+    padding: 0 10px;
+}
+
+a:hover,
+a:visited {
+    text-decoration: underline;
+}
+
 
 </style>
-<script>
-  import Login from "./components/login";
-  export default {
-    components: {Login}
-  }
-</script>
