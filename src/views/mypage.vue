@@ -11,57 +11,38 @@
           </header>
           <div class="card-content">
             <div class="content">
+              <img src="../assets/test.png" alt="Logo" />
+
+              <h3>Namn</h3>
+              <p>Test</p>
+
+              <h3>Ålder</h3>
+              <p>Test</p>
+              <h3>Klass</h3>
+              <p>Test</p>
+              <h3>E-post</h3>
+              <p>Test</p>
               <div class="field">
-                <label class="label" for="id">id</label>
-                <label class="input" id="id" readonly>{{hero.id}}</label>
-              </div>
-              <div class="field">
-                <label class="label" for="firstName">first name</label>
-                <input class="input" id="firstName" />
-              </div>
-              <div class="field">
-                <label class="label" for="lastName">last name</label>
-                <input class="input" id="lastName" />
-              </div>
-              <div class="field">
-                <label class="label" for="description">description</label>
+                <label class="label" for="description">Beskrivning</label>
                 <textarea class="input" id="description" type="text" />
+                <input type="button" value="Spara" />
               </div>
-              <div class="field">
-                <label class="label">cape color</label>
-                <label class="radio" for="color-red">
-                  <input type="radio" id="color-red" value="red" />
-                  red
-                </label>
-                <label class="radio" for="color-blue">
-                  <input type="radio" id="color-blue" value="blue" />
-                  blue
-                </label>
-                <label class="radio" for="color-green">
-                  <input type="radio" id="color-green" value="green" />
-                  green
-                </label>
-                <div class="color-line"></div>
+
+              <h3>Document</h3>
+
+              <div>
+                <h5>CV</h5>
+                <input type="button" value="Lägg till" />
               </div>
-              <div class="field">
-                <label for="power">
-                  super power
-                  <div class="select is-primary">
-                    <select id="power">
-                      <option disabled value>Please select one</option>
-                      <option>Speed</option>
-                      <option>Flight</option>
-                      <option>Strength</option>
-                      <option>Invisibility</option>
-                    </select>
-                  </div>
-                </label>
+
+              <div>
+                <h5>Personligt brev</h5>
+                <input type="button" value="Lägg till" />
               </div>
-              <div class="field">
-                <label class="checkbox" for="active">
-                  active
-                  <input type="checkbox" class="is-primary" id="active" />
-                </label>
+
+              <div>
+                <h5>Betyg</h5>
+                <input type="button" value="Lägg till" />
               </div>
             </div>
           </div>
