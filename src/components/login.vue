@@ -17,9 +17,6 @@
                 </div>
 
                 <button @click="postData" class="btn btn-primary btn-large btn-block">Logga in</button>
-                <br>
-                <router-link to="/loginAd">Är du an administrator?Klicka här! </router-link>
-
             </div>
         </div>
 
@@ -107,7 +104,7 @@
 
     input {
         text-align: center;
-        background-color: #ECF0F1;
+        background-color: beige;
         border: 2px solid transparent;
         border-radius: 3px;
         font-size: 16px;
@@ -118,13 +115,13 @@
     }
 
     input:focus {
-        border: 2px solid #3498DB;
+        border: 2px solid lightyellow;
         box-shadow: none;
     }
 
     .btn {
         border: 2px solid transparent;
-        background: #3498DB;
+        background: #662246;
         color: lightyellow;
         font-size: 16px;
         line-height: 25px;
@@ -140,7 +137,7 @@
     }
 
     .btn:hover {
-        background-color: #2980B9;
+        background-color: tan;
     }
 
 </style>
