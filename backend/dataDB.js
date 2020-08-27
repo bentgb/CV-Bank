@@ -8,13 +8,14 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
         // Cannot open database
         console.error(err.message)
         throw err
-    }else {
+    } else {
         console.log('Connected to the SQlite database.')
         db.run('CREATE TABLE USERS (' +
             'userId INTEGER PRIMARY KEY,' +
             'user TEXT,passCODE TEXT,' +
             'age INTEGER,class TEXT,' +
             'userEMAIL TEXT )', (err) => {
+
             if (err) {
                 // Table already created
             } else {
