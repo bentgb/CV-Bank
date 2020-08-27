@@ -18,6 +18,8 @@
 
                 <button @click="postData" class="btn btn-primary btn-large btn-block">Logga in</button>
             </div>
+            <br>
+            <router-link to="/">Är du en administrator?Klicka här</router-link>
         </div>
 
     </div>
