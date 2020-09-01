@@ -20,10 +20,36 @@ app.listen(HTTP_PORT, () => {
     console.log("Server running on port: " + HTTP_PORT);
 });
 
-app.get("/", (req, res, next) => {
 
-    res.json("HEllo world");
 
+app.get('/api/users', (request, response, next) => {
+    const sql = 'select * from users where userRole <> ?';
+    const params = ['admin'];
+    db.all(sql, params, (err, rows) => {
+        if (err) {
+            response.status(400).json({ "error": err.message });
+            return;
+        }
+        response.send({
+            "message": "success",
+            "users": rows
+        })
+    });
+});
+app.get('/api/users/:id', (request, response, next) => {
+    const sql = 'select * from users where userId = ?'
+    const params = [request.params.id]
+    db.get(sql, params, (err, row) => {
+        if (err) {
+            response.status(400).json({"error":err.message});
+            return;
+        }
+        response.json({
+            "message":"success",
+            "user":row
+        })
+
+    });
 });
 
 //<editor-fold desc="User handle">
