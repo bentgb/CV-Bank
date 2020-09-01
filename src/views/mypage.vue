@@ -1,56 +1,85 @@
 <template>
   <div id="mypage" class="content-container">
     <div class="section content-title-group">
-      <h2 class="title">STUDENTS</h2>
+      <h2 class="title">MY PROFILE </h2>
     </div>
     <div class="columns">
       <div class="column is-8">
         <div class="card edit-detail">
-          <header class="card-header">
-            <p class="card-header-title">Elif</p>
-          </header>
+
           <div class="card-content">
             <div class="content">
               <img src="../assets/test.png" alt="Logo" />
+              <table class="info">
+                <tr>
+                  <td> <label class="label">Namn</label>&nbsp;</td>
+                  <td><label>xx</label></td>
+                </tr>
+                <tr>
+                  <td> <label class="label">Ålder</label>&nbsp;</td>
+                  <td><label>xx</label></td>
+                </tr>
+                <tr>
+                  <td> <label class="label">Klass</label>&nbsp;</td>
+                  <td><label>xx</label></td>
+                </tr>
+                <tr>
+                  <td> <label class="label">E-post</label>&nbsp;</td>
+                  <td><label>xx</label></td>
+                </tr>
+                <tr>
+                  <td> &nbsp;</td>
 
-              <h3>Namn</h3>
-              <p>Test</p>
+                </tr>
 
-              <h3>Ålder</h3>
-              <p>Test</p>
-              <h3>Klass</h3>
-              <p>Test</p>
-              <h3>E-post</h3>
-              <p>Test</p>
-              <div class="field">
-                <label class="label" for="description">Beskrivning</label>
-                <textarea class="input" id="description" type="text" />
-                <input type="button" value="Spara" />
+
+              </table>
+              <br>
+              <h1 class="title">Beskrivning</h1>
+              <br>
+              <div class="textarea">
+              <textarea class="input" id="description" type="text" />
+              <br>
+              <input type="button"  class="btn-save" value="Spara" />
+
               </div>
 
-              <h3>Document</h3>
+              <br>
+
+                <h1 class="title">Document</h1>
+              <br>
+
+              <table class="info">
+               <tr>
+                 <td> <label class="label">CV</label>&nbsp;</td>
+                 <td>                <input type="button" class="btn-save" value="Lägg till" />
+                 </td>
+               </tr>
+               <tr>
+                 <td> <label class="label">Personligt brev</label>&nbsp;</td>
+                 <td>                <input type="button" class="btn-save" value="Lägg till" />
+                 </td>
+               </tr>
+               <tr>
+                 <td> <label class="label">Betyg</label>&nbsp;</td>
+                 <td>                <input type="button" class="btn-save" value="Lägg till" />
+                 </td>
+               </tr>
+             </table>
 
               <div>
-                <h5>CV</h5>
-                <input type="button" value="Lägg till" />
-              </div>
+                <br>
+                <br>
+                <br>
+                <br>
 
-              <div>
-                <h5>Personligt brev</h5>
-                <input type="button" value="Lägg till" />
-              </div>
-
-              <div>
-                <h5>Betyg</h5>
-                <input type="button" value="Lägg till" />
-              </div>
-              <div>
                 <FileReader>
                 <textarea rows="10" v-model="text"></textarea>
                 <br>
                 <text-reader @load="text = $event"></text-reader>
                 </FileReader>
               </div>
+
             </div>
           </div>
           <footer class="card-footer">
@@ -99,6 +128,59 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-@import "@/design/index.scss";
+<style scoped >
+.title{
+  font-family: Calibri, monospace;
+  color: #f0f3f5;
+  background-color: #7c235b;
+  padding: 5px;
+  margin: auto;
+}
+.content{
+}
+table{
+  width: 30%;
+  margin: 0 auto ;
+  text-align: left;
+}
+.textarea{
+  width: 30%;
+  margin: 0 auto ;
+  text-align: center;
+}
+.info{
+}
+  .label{
+    margin: auto;
+    color: #cc459a;
+    background: transparent;
+    border-radius: 0;
+    font-family: Calibri, monospace;
+    font-size: 26px;
+    text-align: left;
+    padding-left: 7px;
+  }
+  textarea{
+    width: 100%;
+    height: 150px;
+  }
+  .btn-save{
+    margin-top: 2px;
+    margin-bottom: 2px;
+    background-color: #7c235b;
+    font-family: Calibri, monospace;
+    font-weight: bold;
+    color: #f0f3f5;
+    border: 1px solid black;
+    width: 150px;
+    height: 40px;
+    cursor: pointer;
+
+
+  }
+  .btn
+  {
+
+  }
+
 </style>
