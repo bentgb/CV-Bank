@@ -1,5 +1,5 @@
 <template>
-  <div class="content-container">
+  <div id="mypage" class="content-container">
     <div class="section content-title-group">
       <h2 class="title">STUDENTS</h2>
     </div>
@@ -7,7 +7,7 @@
       <div class="column is-8">
         <div class="card edit-detail">
           <header class="card-header">
-            <p class="card-header-title">{{hero.firstName}}</p>
+            <p class="card-header-title">Elif</p>
           </header>
           <div class="card-content">
             <div class="content">
@@ -44,6 +44,13 @@
                 <h5>Betyg</h5>
                 <input type="button" value="Lägg till" />
               </div>
+              <div>
+                <FileReader>
+                <textarea rows="10" v-model="text"></textarea>
+                <br>
+                <text-reader @load="text = $event"></text-reader>
+                </FileReader>
+              </div>
             </div>
           </div>
           <footer class="card-footer">
@@ -66,21 +73,20 @@
 </template>
 
 <script>
+  import FileReader from "../components/FileReader";
+
+
 export default {
-  name: "Heroes",
+  name: "mypage",
   data() {
     return {
-      hero: {
-        id: 20,
-        firstName: "Elif Kubra",
-        lastName: " Arslan",
-        description: "10 yasinda",
-        capeColor: "",
-        power: "",
-        active: true
-      },
-      message: "test"
+
+      message: "test",
+      text: ""
     };
+  },
+  components: {
+    FileReader
   },
   methods: {
     cancelHero() {
