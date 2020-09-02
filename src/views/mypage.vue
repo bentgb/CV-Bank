@@ -1,186 +1,88 @@
 <template>
-  <div id="mypage" class="content-container">
+  <b-container>
     <div class="section content-title-group">
-      <h2 class="title">MY PROFILE </h2>
+      <h2 class="title">STUDENT</h2>
     </div>
-    <div class="columns">
-      <div class="column is-8">
-        <div class="card edit-detail">
-
-          <div class="card-content">
-            <div class="content">
-              <img src="../assets/test.png" alt="Logo" />
-              <table class="info">
-                <tr>
-                  <td> <label class="label">Namn</label>&nbsp;</td>
-                  <td><label>xx</label></td>
-                </tr>
-                <tr>
-                  <td> <label class="label">Ålder</label>&nbsp;</td>
-                  <td><label>xx</label></td>
-                </tr>
-                <tr>
-                  <td> <label class="label">Klass</label>&nbsp;</td>
-                  <td><label>xx</label></td>
-                </tr>
-                <tr>
-                  <td> <label class="label">E-post</label>&nbsp;</td>
-                  <td><label>xx</label></td>
-                </tr>
-                <tr>
-                  <td> &nbsp;</td>
-
-                </tr>
-
-
-              </table>
-              <br>
-              <h1 class="title">Beskrivning</h1>
-              <br>
-              <div class="textarea">
-              <textarea class="input" id="description" type="text" />
-              <br>
-              <input type="button"  class="btn-save" value="Spara" />
-
-              </div>
-
-              <br>
-
-                <h1 class="title">Document</h1>
-              <br>
-
-              <table class="info">
-               <tr>
-                 <td> <label class="label">CV</label>&nbsp;</td>
-                 <td>                <input type="button" class="btn-save" value="Lägg till" />
-                 </td>
-               </tr>
-               <tr>
-                 <td> <label class="label">Personligt brev</label>&nbsp;</td>
-                 <td>                <input type="button" class="btn-save" value="Lägg till" />
-                 </td>
-               </tr>
-               <tr>
-                 <td> <label class="label">Betyg</label>&nbsp;</td>
-                 <td>                <input type="button" class="btn-save" value="Lägg till" />
-                 </td>
-               </tr>
-             </table>
-
-              <div>
-                <br>
-                <br>
-                <br>
-                <br>
-
-                <FileReader>
-                <textarea rows="10" v-model="text"></textarea>
-                <br>
-                <text-reader @load="text = $event"></text-reader>
-                </FileReader>
-              </div>
-
-            </div>
-          </div>
-          <footer class="card-footer">
-            <button class="link card-footer-item cancel-button" @click="cancelHero">
-              <i class="fas fa-undo"></i>
-              <span>Cancel</span>
-            </button>
-            <button class="link card-footer-item save-button" @click="saveHero">
-              <i class="fas fa-save"></i>
-              <span>Save</span>
-            </button>
-          </footer>
-        </div>
-        <div class="notification is-info">
-          <pre> {{message}}</pre>
-        </div>
-      </div>
+    <div class="mt-4">
+      <b-card img-src="./assets/test.png" img-alt="Card image" img-left class="mb-3">
+        <b-card-title>{{this.$parent.user.user}}</b-card-title>
+        <b-card-sub-title class="text-left">Ålder</b-card-sub-title>
+        <b-card-text class="text-left">{{this.$parent.user.age}}</b-card-text>
+        <b-card-sub-title class="text-left">Klass</b-card-sub-title>
+        <b-card-text class="text-left">{{this.$parent.user.class}}</b-card-text>
+        <b-card-sub-title class="text-left">E-post</b-card-sub-title>
+        <b-card-text class="text-left">{{this.$parent.user.userEMAIL}}</b-card-text>
+      </b-card>
+      <b-form-group class="text-left" label="Beskrivning" label-for="textarea-lazy">
+        <b-form-textarea
+                id="textarea-lazy"
+                placeholder="Skriv lite om dig själv.."
+                lazy-formatter
+                :formatter="formatter"
+        ></b-form-textarea>
+      </b-form-group>
+      <h5 class="text-left">Ladda upp cv</h5>
+      <b-form-group id="image-group">
+        <b-form-file
+                id="image"
+                v-model="form.cv"
+                placeholder="Välj en bild eller släpp den här..."
+                drop-placeholder="Släpp bilden här..."
+        />
+      </b-form-group>
+      <b-button class="mr-0 mt-1" size="sm">Spara</b-button>
+      <h5 class="text-left">Ladda upp personligt brev</h5>
+      <b-form-file
+              :state="Boolean(pb)"
+              placeholder="Välj en fil eller dra filen hit..."
+              drop-placeholder="Dra filen hit"
+      ></b-form-file>
+      <b-button class="mr-0 mt-1" size="sm">Spara</b-button>
+      <h5 class="text-left">Ladda upp betyg</h5>
+      <b-form-file
+              :state="Boolean(betyg)"
+              placeholder="Välj en fil eller dra filen hit..."
+              drop-placeholder="Dra filen hit"
+      ></b-form-file>
+      <b-button class="mr-0 mt-1" size="sm">Spara</b-button>
     </div>
-  </div>
+  </b-container>
 </template>
-
 <script>
-  import FileReader from "../components/FileReader";
-
-
-export default {
-  name: "mypage",
-  data() {
-    return {
-
-      message: "test",
-      text: ""
-    };
-  },
-  components: {
-    FileReader
-  },
-  methods: {
-    cancelHero() {
-      this.message = "";
+  export default {
+    name: "Heroes",
+    data() {
+      return {
+        users: [],
+        form: {
+          cv: null,
+          betyg: null,
+          pb: null
+        },
+        message: "test"
+      };
     },
-    saveHero() {
-      this.message = JSON.stringify(this.hero, null, "\n");
-    }
+    methods: {
+      cancelHero() {
+        this.message = "";
+      },
+      saveHero() {
+        this.message = JSON.stringify(this.hero, null, "\n");
+      }
+    },/*
+      mounted(){
+        fetch('http://127.0.0.1:3000/api/users/')
+                .then((response) => {
+                  return response.json();
+                })
+                .then((data) => {
+                  console.log(data.users);
+                  this.users = data.users;
+
+                });
+    }*/
   }
-};
+
 </script>
 
-<style scoped >
-.title{
-  font-family: Calibri, monospace;
-  color: #f0f3f5;
-  background-color: #7c235b;
-  padding: 5px;
-  margin: auto;
-}
-.content{
-}
-table{
-  width: 30%;
-  margin: 0 auto ;
-  text-align: left;
-}
-.textarea{
-  width: 30%;
-  margin: 0 auto ;
-  text-align: center;
-}
-.info{
-}
-  .label{
-    margin: auto;
-    color: #cc459a;
-    background: transparent;
-    border-radius: 0;
-    font-family: Calibri, monospace;
-    font-size: 26px;
-    text-align: left;
-    padding-left: 7px;
-  }
-  textarea{
-    width: 100%;
-    height: 150px;
-  }
-  .btn-save{
-    margin-top: 2px;
-    margin-bottom: 2px;
-    background-color: #7c235b;
-    font-family: Calibri, monospace;
-    font-weight: bold;
-    color: #f0f3f5;
-    border: 1px solid black;
-    width: 150px;
-    height: 40px;
-    cursor: pointer;
 
-
-  }
-  .btn
-  {
-
-  }
-
-</style>

@@ -85,7 +85,7 @@ app.put("/api/new_user", (req, res, next) => {
 });
 
 app.post("/api/users/login", (req, res, next) => {
-    var sql = "select userId,user,userEMAIL from USERS WHERE passCode = ? AND user = ?";
+    var sql = "select user,passCODE,age,class,userRole, userEMAIL from USERS WHERE passCode = ? AND user = ?";
     var params = [req.body.pass,req.body.user];
     db.all(sql, params, (err, rows) => {
         if (err) {
@@ -96,4 +96,24 @@ app.post("/api/users/login", (req, res, next) => {
         res.json(rows);
     });
 });
+
+
+
+
+app.get("/api/users", (req, res, next) => {
+    var sql = "select * from users"
+    var params = []
+    db.all(sql, params, (err, rows) => {
+        if (err) {
+            res.status(400).json({"error":err.message});
+            return;
+        }
+        res.json({
+            "message":"success",
+            "users":rows
+        })
+    });
+});
+
+
 
