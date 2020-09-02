@@ -1,68 +1,67 @@
 <template>
-  <div class="content-container">
+  <b-container>
     <div class="section content-title-group">
-      <h2 class="title">STUDENTS</h2>
+      <h2 class="title">STUDENT</h2>
     </div>
-    <div class="columns">
-      <div class="column is-8">
-        <div class="card edit-detail">
-          <header class="card-header">
-            <p class="card-header-title">{{hero.firstName}}</p>
-          </header>
-          <div class="card-content">
-            <div class="content">
-              <img src="../assets/test.png" alt="Logo" />
 
-              <h3>Namn</h3>
-              <p>Test</p>
+    <div class="mt-4">
+      <b-card>
+        <b-card-img
+          :src="require('../assets/test.png')"
+          alt="Card image"
+          class="mb-3 w-25 h-50 img-left"
+        ></b-card-img>
+        <b-card-title>{{hero.firstName}}</b-card-title>
+        <b-card-sub-title class="text-left">Ålder</b-card-sub-title>
+        <b-card-text class="text-left">{{hero.age}}</b-card-text>
 
-              <h3>Ålder</h3>
-              <p>Test</p>
-              <h3>Klass</h3>
-              <p>Test</p>
-              <h3>E-post</h3>
-              <p>Test</p>
-              <div class="field">
-                <label class="label" for="description">Beskrivning</label>
-                <textarea class="input" id="description" type="text" />
-                <input type="button" value="Spara" />
-              </div>
+        <b-card-sub-title class="text-left">Klass</b-card-sub-title>
+        <b-card-text class="text-left">{{hero.klass}}</b-card-text>
 
-              <h3>Document</h3>
+        <b-card-sub-title class="text-left">E-post</b-card-sub-title>
+        <b-card-text class="text-left">{{hero.email}}</b-card-text>
+      </b-card>
 
-              <div>
-                <h5>CV</h5>
-                <input type="button" value="Lägg till" />
-              </div>
+      <b-form-group class="text-left" label="Beskrivning" label-for="textarea-lazy">
+        <b-form-textarea
+          id="textarea-lazy"
+          placeholder="Skriv lite om dig själv.."
+          lazy-formatter
+          :formatter="formatter"
+        ></b-form-textarea>
+      </b-form-group>
 
-              <div>
-                <h5>Personligt brev</h5>
-                <input type="button" value="Lägg till" />
-              </div>
+      <h5 class="text-left">Ladda upp cv</h5>
 
-              <div>
-                <h5>Betyg</h5>
-                <input type="button" value="Lägg till" />
-              </div>
-            </div>
-          </div>
-          <footer class="card-footer">
-            <button class="link card-footer-item cancel-button" @click="cancelHero">
-              <i class="fas fa-undo"></i>
-              <span>Cancel</span>
-            </button>
-            <button class="link card-footer-item save-button" @click="saveHero">
-              <i class="fas fa-save"></i>
-              <span>Save</span>
-            </button>
-          </footer>
-        </div>
-        <div class="notification is-info">
-          <pre> {{message}}</pre>
-        </div>
-      </div>
+      <b-form-group id="image-group">
+        <b-form-file
+          id="image"
+          v-model="form.cv"
+          placeholder="Välj en bild eller släpp den här..."
+          drop-placeholder="Släpp bilden här..."
+        />
+      </b-form-group>
+      <b-button class="mr-0 mt-1" size="sm">Spara</b-button>
+
+      <h5 class="text-left">Ladda upp personligt brev</h5>
+
+      <b-form-file
+        :state="Boolean(pb)"
+        placeholder="Välj en fil eller dra filen hit..."
+        drop-placeholder="Dra filen hit"
+      ></b-form-file>
+      <b-button class="mr-0 mt-1" size="sm">Spara</b-button>
+
+      <h5 class="text-left">Ladda upp betyg</h5>
+
+      <b-form-file
+        :state="Boolean(betyg)"
+        placeholder="Välj en fil eller dra filen hit..."
+        drop-placeholder="Dra filen hit"
+      ></b-form-file>
+      <b-button class="mr-0 mt-1" size="sm">Spara</b-button>
     </div>
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -75,9 +74,15 @@ export default {
         firstName: "Elif Kubra",
         lastName: " Arslan",
         description: "10 yasinda",
-        capeColor: "",
-        power: "",
+        email: "test@example.com",
+        klass: "webb/cms",
+        age: 21,
         active: true
+      },
+      form: {
+        cv: null,
+        betyg: null,
+        pb: null
       },
       message: "test"
     };
@@ -93,6 +98,3 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-@import "@/design/index.scss";
-</style>
