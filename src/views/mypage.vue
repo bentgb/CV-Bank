@@ -13,11 +13,14 @@
               <table class="info">
                 <tr>
                   <td> <label class="label">Namn</label>&nbsp;</td>
-                  <td><label>xx</label></td>
+                  <td><label>
+                    <li v-for="user in users" v-bind:key="user.userId">{{ user.user }}</li>
+
+                  </label></td>
                 </tr>
                 <tr>
                   <td> <label class="label">Ålder</label>&nbsp;</td>
-                  <td><label>xx</label></td>
+                  <td><label>{{users[2].namn}}</label></td>
                 </tr>
                 <tr>
                   <td> <label class="label">Klass</label>&nbsp;</td>
@@ -109,7 +112,9 @@ export default {
   name: "mypage",
   data() {
     return {
-
+      users:[],
+      namn:"",
+id:0,
       message: "test",
       text: ""
     };
@@ -124,6 +129,18 @@ export default {
     saveHero() {
       this.message = JSON.stringify(this.hero, null, "\n");
     }
+  },
+  mounted(){
+    fetch('http://127.0.0.1:3000/api/users/')
+            .then((response) => {
+              return response.json();
+            })
+            .then((data) => {
+              console.log(data.users);
+              this.users = data.users;
+              this.id=data.user.id
+
+            });
   }
 };
 </script>
