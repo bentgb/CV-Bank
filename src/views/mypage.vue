@@ -21,16 +21,18 @@
                 :formatter="formatter"
         ></b-form-textarea>
       </b-form-group>
-      <h5 class="text-left">Ladda upp cv</h5>
-      <b-form-group id="image-group">
+      <h5 class="text-left" >Ladda upp cv</h5>
+      <b-form-group id="image-group" >
         <b-form-file
-                id="image"
-                v-model="form.cv"
+                enctype="multipart/form-data"
+                type="file"
+                ref="file"
+                v-on:change="handleFileUpload()"
                 placeholder="Välj en bild eller släpp den här..."
                 drop-placeholder="Släpp bilden här..."
         />
+        <b-button class="mr-0 mt-1" size="sm" v-on:click="submitFile()">Spara</b-button>
       </b-form-group>
-      <b-button class="mr-0 mt-1" size="sm">Spara</b-button>
       <h5 class="text-left">Ladda upp personligt brev</h5>
       <b-form-file
               :state="Boolean(pb)"
@@ -49,16 +51,14 @@
   </b-container>
 </template>
 <script>
+  import axios from 'axios';
+
   export default {
     name: "Heroes",
     data() {
       return {
+        file: "",
         users: [],
-        form: {
-          cv: null,
-          betyg: null,
-          pb: null
-        },
         message: "test"
       };
     },
@@ -68,6 +68,22 @@
       },
       saveHero() {
         this.message = JSON.stringify(this.hero, null, "\n");
+      },
+      handleFileUpload(){
+        this.file = this.$refs.file.files[0];
+      },
+      async submitFile(){
+        let formData = new FormData();
+        formData.append('file', this.file);
+        await axios.post( 'http://127.0.0.1:3000/api/upload',
+                formData,
+        ).then(function(){
+          console.log('SUCCESS!!');
+        })
+                .catch(function(){
+                  console.log('FAILURE!!');
+                });
+
       }
     },/*
       mounted(){

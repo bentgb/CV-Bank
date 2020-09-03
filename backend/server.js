@@ -3,10 +3,15 @@ var express = require("express");
 var app = express();
 var cors = require('cors');
 var db = require("./dataDB.js");
+var multer = require("multer");
 
 
 app.use(cors());
 app.use(express.static('public'));
+
+var upload = multer({
+    dest:"./uploads/"
+})
 
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -83,6 +88,12 @@ app.put("/api/new_user", (req, res, next) => {
         }
     });
 });
+
+app.post("/api/upload", upload.single("file"), (req, res) =>{
+    res.json({ file: req.file })
+
+
+})
 
 app.post("/api/users/login", (req, res, next) => {
     var sql = "select user,passCODE,age,class,userRole, userEMAIL from USERS WHERE passCode = ? AND user = ?";
