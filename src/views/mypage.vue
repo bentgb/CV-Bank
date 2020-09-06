@@ -38,6 +38,8 @@
         />
         <b-button class="mr-0 mt-1" size="sm" v-on:click="submitFile()">Spara</b-button>
       </b-form-group>
+      <div v-if="fileUploaded">{{this.file.name}} is uploaded</div>
+
       <h5 class="text-left">Ladda upp personligt brev</h5>
       <b-form-file
               :state="Boolean(pb)"
@@ -64,6 +66,7 @@
       return {
         desc:"",
         file: "",
+        fileUploaded:false,
         message: "test"
       };
     },
@@ -80,6 +83,7 @@
         try{
           axios.post('http://127.0.0.1:3000/api/upload', formData)
           this.message ="uploaded"
+          this.fileUploaded=true
           alert("File uploaded")
         }catch (e) {
           this.message="Sth went wrong"
