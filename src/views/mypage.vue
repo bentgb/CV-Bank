@@ -27,13 +27,14 @@
       </b-form-group>
       <h5 class="text-left" >Ladda upp cv</h5>
       <b-form-group id="image-group" >
-        <b-form-file
+        <b-form-file accept=".pdf"
                 enctype="multipart/form-data"
-                type="file"
                 ref="file"
+                v-model="file"
                 v-on:change="handleFileUpload()"
-                placeholder="Välj en bild eller släpp den här..."
-                drop-placeholder="Släpp bilden här..."
+                placeholder="Välj en .pdf fil eller släpp den här ...
+"
+                drop-placeholder="Släpp .pdf filen här som ..."
         />
         <b-button class="mr-0 mt-1" size="sm" v-on:click="submitFile()">Spara</b-button>
       </b-form-group>
@@ -63,19 +64,26 @@
       return {
         desc:"",
         file: "",
-        users: [],
         message: "test"
       };
     },
     methods: {
-      cancelHero() {
-        this.message = "";
-      },
-      saveHero() {
-        this.message = JSON.stringify(this.hero, null, "\n");
-      },
+
       handleFileUpload(){
         this.file = this.$refs.file.files[0];
+
+      },
+
+      async submitFile(){
+        const formData = new FormData();
+        formData.append('file', this.file);
+        try{
+          axios.post('http://127.0.0.1:3000/api/upload', formData)
+          this.message ="uploaded"
+          alert("File uploaded")
+        }catch (e) {
+          this.message="Sth went wrong"
+        }
       },
 
       async saveDescription(){
@@ -92,40 +100,10 @@
         if (data.length === 0) {
           alert(" felaktigt!");
         }
-
       },
 
 
-
-
-
-
-      async submitFile(){
-        let formData = new FormData();
-        formData.append('file', this.file);
-        await axios.post( 'http://127.0.0.1:3000/api/upload',
-                formData,
-        ).then(function(){
-          console.log('SUCCESS!!');
-
-        })
-                .catch(function(){
-                  console.log('FAILURE!!');
-                });
-
-      }
-    },/*
-      mounted(){
-        fetch('http://127.0.0.1:3000/api/users/')
-                .then((response) => {
-                  return response.json();
-                })
-                .then((data) => {
-                  console.log(data.users);
-                  this.users = data.users;
-
-                });
-    }*/
+  }
   }
 
 </script>
