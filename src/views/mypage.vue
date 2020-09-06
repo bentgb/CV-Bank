@@ -12,14 +12,18 @@
         <b-card-text class="text-left">{{this.$parent.user.class}}</b-card-text>
         <b-card-sub-title class="text-left">E-post</b-card-sub-title>
         <b-card-text class="text-left">{{this.$parent.user.userEMAIL}}</b-card-text>
+        <b-card-sub-title class="text-left">ID</b-card-sub-title>
+        <b-card-text class="text-left">{{this.$parent.user.userId}}</b-card-text>
       </b-card>
       <b-form-group class="text-left" label="Beskrivning" label-for="textarea-lazy">
         <b-form-textarea
+                v-model="desc"
                 id="textarea-lazy"
-                placeholder="Skriv lite om dig själv.."
+                :placeholder="this.$parent.user.description"
                 lazy-formatter
                 :formatter="formatter"
         ></b-form-textarea>
+        <b-button class="mr-0 mt-1" size="sm" @click="saveDescription()">Save</b-button>
       </b-form-group>
       <h5 class="text-left" >Ladda upp cv</h5>
       <b-form-group id="image-group" >
@@ -57,6 +61,7 @@
     name: "Heroes",
     data() {
       return {
+        desc:"",
         file: "",
         users: [],
         message: "test"
@@ -72,6 +77,29 @@
       handleFileUpload(){
         this.file = this.$refs.file.files[0];
       },
+
+      async saveDescription(){
+
+        const requestOptions = {
+          method: "PUT",
+          mode: 'cors',
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({description: this.desc})
+        };
+        const response = await fetch("http://localhost:3000/api/users/"+this.$parent.user.userId, requestOptions);
+        console.log(this.$parent.user.userId);
+        const data = await response.json();
+        if (data.length === 0) {
+          alert(" felaktigt!");
+        }
+
+      },
+
+
+
+
+
+
       async submitFile(){
         let formData = new FormData();
         formData.append('file', this.file);
@@ -79,6 +107,7 @@
                 formData,
         ).then(function(){
           console.log('SUCCESS!!');
+
         })
                 .catch(function(){
                   console.log('FAILURE!!');
