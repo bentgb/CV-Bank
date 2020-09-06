@@ -9,9 +9,21 @@ var multer = require("multer");
 app.use(cors());
 app.use(express.static('public'));
 
-var upload = multer({
+/*var upload = multer({
     dest:"./uploads/"
-})
+})*/
+
+
+var storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './uploads/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
+
+var upload = multer({ storage: storage });
 
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
