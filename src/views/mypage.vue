@@ -26,6 +26,7 @@
         <b-button class="mr-0 mt-1" size="sm" @click="saveDescription()">Save</b-button>
       </b-form-group>
       <h5 class="text-left" >Ladda upp cv</h5>
+
       <b-form-group id="image-group" >
         <b-form-file accept=".pdf"
                 enctype="multipart/form-data"
@@ -38,7 +39,18 @@
         />
         <b-button class="mr-0 mt-1" size="sm" v-on:click="submitFile()">Spara</b-button>
       </b-form-group>
-      <div v-if="fileUploaded">{{this.file.name}} is uploaded</div>
+      <div v-if="fileUploaded">
+        {{this.file.name}} is uploaded
+<!--        <a href="#" onclick="window.open('./uploads/Aisha.pdf', '_blank', 'fullscreen=yes'); return false;">MyPDF</a>-->
+<!--        <a href="./uploads/Aisha.pdf">Mypdf</a>-->
+<!--
+        <iframe :src="getPDFPath()" style="width:200px; height:200px; border: none;">
+          Oops! an error has occurred.
+        </iframe>
+-->
+        <b-button class="mr-0 mt-1" size="sm" v-on:click="readFile()">open</b-button>
+
+      </div>
 
       <h5 class="text-left">Ladda upp personligt brev</h5>
       <b-form-file
@@ -81,10 +93,16 @@
         const formData = new FormData();
         formData.append('file', this.file);
         try{
+          if (this.file!=""){
+
+
           axios.post('http://127.0.0.1:3000/api/upload', formData)
           this.message ="uploaded"
           this.fileUploaded=true
           alert("File uploaded")
+          }else {
+            alert("Choose a File ")
+          }
         }catch (e) {
           this.message="Sth went wrong"
         }
@@ -106,6 +124,14 @@
         }
       },
 
+      readFile() {
+          window.open('http://localhost:3000/api/uploads/Aisha.pdf', '_blank') //to open in new tab
+        },
+
+     /* getPDFPath(){
+        return './uploads/Aisha.pdf'
+
+      }*/
 
   }
   }
