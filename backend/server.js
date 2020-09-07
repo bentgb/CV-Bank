@@ -109,7 +109,9 @@ app.put("/api/users/:id", (req,res,next)=>
 
 
 app.post("/api/upload", upload.single("file"), (req, res) =>{
-    res.json({ file: req.file })
+   var x=res.json({ file: req.file})
+
+x
 
 
 })
