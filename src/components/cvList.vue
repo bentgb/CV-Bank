@@ -6,24 +6,20 @@
 
             <div class="mt-5">
             <div class="row" >
-                <b-card-title>{{this.$parent.user.user}}</b-card-title>
-                <b-button class="mr-0 mt-3 " >ladda</b-button>
+                <b-card-title>Edwin</b-card-title>
+                <b-button class="mr-0 mt-3 " >Öppna</b-button>
             </div>
             <div class="row">
-                    <b-card-title>{{this.$parent.user.user}}</b-card-title>
-                    <b-button class="mr-0 mt-3 " >ladda</b-button>
+                    <b-card-title>Aisha</b-card-title>
+                    <b-button class="mr-0 mt-3 " >Öppna</b-button>
             </div>
             <div class="row">
-                    <b-card-title>{{this.$parent.user.user}}</b-card-title>
-                    <b-button class="mr-0 mt-3 " >ladda</b-button>
+                    <b-card-title>Husam</b-card-title>
+                    <b-button class="mr-0 mt-3 " >Öppna</b-button>
             </div>
             <div class="row">
-                    <b-card-title>{{this.$parent.user.user}}</b-card-title>
-                    <b-button class="mr-0 mt-3 " >ladda</b-button>
-                </div>
-            <div class="row">
-                    <b-card-title>{{this.$parent.user.user}}</b-card-title>
-                    <b-button class="mr-0 mt-3 " >ladda</b-button>
+                    <b-card-title>Tugba</b-card-title>
+                    <b-button class="mr-0 mt-3 " >Öppna</b-button>
                 </div>
 
 

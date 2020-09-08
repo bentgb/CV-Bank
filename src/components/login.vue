@@ -1,8 +1,10 @@
 <template>
-    <div class="login">
+    <div class="login ">
         <div class="login-screen">
             <div class="app-title">
+                <br>
                 <h1>Logga in</h1>
+                <br>
             </div>
 
             <div class="login-form">
@@ -10,16 +12,14 @@
                     <input v-model="input.name" type="text" class="login-field" value="" placeholder="email" id="login-name">
                     <label class="login-field-icon fui-user" for="login-name"></label>
                 </div>
-
                 <div class="control-group">
                     <input v-model="input.password" type="password" class="login-field" value="" placeholder="lösenord" id="login-pass" @keyup.enter="postData">
                     <label class="login-field-icon fui-lock" for="login-pass"></label>
                 </div>
-
                 <button @click="postData" class="btn btn-primary btn-large btn-block">Logga in</button>
             </div>
             <br>
-            <router-link to="/">Är du en administrator?Klicka här</router-link>
+            <br>
         </div>
 
     </div>
