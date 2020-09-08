@@ -33,7 +33,8 @@
             return {
                 input:{
                     password: "",
-                    name: "",}
+                    name: "",
+                userRole:""}
             }
         },
 
@@ -55,12 +56,23 @@
                     else if(data[0].user === this.input.name) {
                         this.$emit("authenticated", true);
                         this.$emit("user", data[0]);
-                        await this.$router.replace({name: "mypage"});
+                        this.userType();
                     } }
                 else {
                     alert("Både användarnamn och lösenord måste vara ifyllda!");
                 }
             },
+            userType: async function(){
+
+
+               if( this.$parent.user.userRole==="admin"){
+                await this.$router.replace({name: "admin"});
+               }else {
+                   await this.$router.replace({name: "mypage"});
+               }
+
+
+            }
         },
 
 
