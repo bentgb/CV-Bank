@@ -26,22 +26,41 @@
 
       <b-form-group class="text-left" label="Beskrivning" label-for="textarea-lazy">
         <b-form-textarea
+          v-model="desc"
           id="textarea-lazy"
-          placeholder="Skriv lite om dig själv.."
+          :placeholder="this.$parent.user.description"
           lazy-formatter
           :formatter="formatter"
         ></b-form-textarea>
+        <b-button class="mr-0 mt-1" size="sm" @click="saveDescription()">Save</b-button>
       </b-form-group>
       <h5 class="text-left">Ladda upp cv</h5>
+
       <b-form-group id="image-group">
         <b-form-file
-          id="image"
-          v-model="form.cv"
-          placeholder="Välj en bild eller släpp den här..."
-          drop-placeholder="Släpp bilden här..."
+          accept=".pdf"
+          enctype="multipart/form-data"
+          ref="file"
+          v-model="file"
+          v-on:change="handleFileUpload()"
+          placeholder="Välj en .pdf fil eller släpp den här ...
+"
+          drop-placeholder="Släpp .pdf filen här som ..."
         />
+        <b-button class="mr-0 mt-1" size="sm" v-on:click="submitFile()">Spara</b-button>
       </b-form-group>
-      <b-button class="mr-0 mt-1" size="sm">Spara</b-button>
+      <div v-if="fileUploaded">
+        {{this.file.name}} is uploaded
+        <!--        <a href="#" onclick="window.open('./uploads/Aisha.pdf', '_blank', 'fullscreen=yes'); return false;">MyPDF</a>-->
+        <!--        <a href="./uploads/Aisha.pdf">Mypdf</a>-->
+        <!--
+        <iframe :src="getPDFPath()" style="width:200px; height:200px; border: none;">
+          Oops! an error has occurred.
+        </iframe>
+        -->
+        <b-button class="mr-0 mt-1" size="sm" v-on:click="readFile()">open</b-button>
+      </div>
+
       <h5 class="text-left">Ladda upp personligt brev</h5>
       <b-form-file
         :state="Boolean(pb)"
@@ -60,28 +79,69 @@
   </b-container>
 </template>
 <script>
+import axios from "axios";
+
 export default {
   name: "Heroes",
   data() {
     return {
-      users: [],
-      form: {
-        cv: null,
-        betyg: null,
-        pb: null
-      },
-      form_img: "test.png",
+      desc: "",
+      file: "",
+      fileUploaded: false,
       message: "test",
+      form_img: "test.png",
       img: null
     };
   },
   methods: {
-    cancelHero() {
-      this.message = "";
+    handleFileUpload() {
+      this.file = this.$refs.file.files[0];
     },
-    saveHero() {
-      this.message = JSON.stringify(this.hero, null, "\n");
+
+    async submitFile() {
+      const formData = new FormData();
+      formData.append("file", this.file);
+      try {
+        if (this.file != "") {
+          axios.post("http://127.0.0.1:3000/api/upload", formData);
+          this.message = "uploaded";
+          this.fileUploaded = true;
+          alert("File uploaded");
+        } else {
+          alert("Choose a File ");
+        }
+      } catch (e) {
+        this.message = "Sth went wrong";
+      }
     },
+
+    async saveDescription() {
+      const requestOptions = {
+        method: "PUT",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ description: this.desc })
+      };
+      const response = await fetch(
+        "http://localhost:3000/api/users/" + this.$parent.user.userId,
+        requestOptions
+      );
+      console.log(this.$parent.user.userId);
+      const data = await response.json();
+      if (data.length === 0) {
+        alert(" felaktigt!");
+      }
+    },
+
+    readFile() {
+      window.open("http://localhost:3000/api/uploads/Aisha.pdf", "_blank"); //to open in new tab
+    },
+
+    /* getPDFPath(){
+        return './uploads/Aisha.pdf'
+
+      },*/
+
     image() {
       this.form_img = this.img.name;
       // fetch("api/users", {
@@ -96,21 +156,9 @@ export default {
       //   .then(response => response.json())
       //   .then(result => {
       //     // if()
-      //   });
+      //   })
     }
   }
-  /*
-      mounted(){
-        fetch('http://127.0.0.1:3000/api/users/')
-                .then((response) => {
-                  return response.json();
-                })
-                .then((data) => {
-                  console.log(data.users);
-                  this.users = data.users;
-
-                });
-    }*/
 };
 </script>
 
