@@ -15,12 +15,12 @@
         img-left
         class="mb-3"
       >
-        <b-card-title class="text-center ml-3">{{this.$parent.user.user}}</b-card-title>
-        <b-card-sub-title class="text-left ml-3 mb-2">Ålder</b-card-sub-title>
+        <b-card-title class="text-center mr-5">{{this.$parent.user.user}}</b-card-title>
+        <b-card-sub-title class="text-left ml-2 mb-2">Ålder</b-card-sub-title>
         <b-card-text class="text-left ml-4 mb-2">{{this.$parent.user.age}}</b-card-text>
-        <b-card-sub-title class="text-left ml-3 mb-2">Klass</b-card-sub-title>
+        <b-card-sub-title class="text-left ml-2 mb-2">Klass</b-card-sub-title>
         <b-card-text class="text-left ml-4 mb-2">{{this.$parent.user.class}}</b-card-text>
-        <b-card-sub-title class="text-left ml-3 mb-2">E-post</b-card-sub-title>
+        <b-card-sub-title class="text-left ml-2 mb-2">E-post</b-card-sub-title>
         <b-card-text class="text-left ml-4 mb-2">{{this.$parent.user.userEMAIL}}</b-card-text>
       </b-card>
 
@@ -137,11 +137,6 @@ export default {
       window.open("http://localhost:3000/api/uploads/Aisha.pdf", "_blank"); //to open in new tab
     },
 
-    /* getPDFPath(){
-        return './uploads/Aisha.pdf'
-
-      },*/
-
     image() {
       this.form_img = this.img.name;
       // fetch("api/users", {
@@ -158,6 +153,11 @@ export default {
       //     // if()
       //   })
     }
+
+    /* getPDFPath(){
+        return './uploads/Aisha.pdf'
+
+      },*/
   }
 };
 </script>
