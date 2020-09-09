@@ -15,15 +15,19 @@ app.use(express.static('public'));
 
 
 var storage = multer.diskStorage({
-
     destination: function(req, file, cb) {
         cb(null, './uploads/');
     },
-    filename: function(req, file, cb) { cb(null, file.originalname     );
+    filename: function(req, file, cb) {
+        cb(null, file.originalname);
     }
 });
 
-var upload = multer({ storage: storage });
+var upload = multer({ storage: storage,
+    limits:{
+    fileSize:10*1024*1024
+    },
+});
 
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -69,6 +73,37 @@ app.get('/api/users/:id', (request, response, next) => {
     });
 });
 
+//<editor-fold desc="User handle">
+app.put("/api/new_user", (req, res, next) => {
+
+    var txtdata=req.body.email.toString();
+    txtdata=txtdata.toLowerCase();
+    txtdata=[txtdata];
+    txtdata.push(req.body.user.toString());
+    var sql = "select userId from USERS where userEMAIL = ? OR user = ?";
+    var params = txtdata;
+    db.all(sql, params, (err, rows) => {
+        if (err) {
+            res.status(400).json({"error": err.message});
+            return;
+        }
+        if (rows.length === 1) {
+            res.json({
+                "Message":"User already exists"
+            })
+
+        }else{
+            insert = "INSERT INTO USERS (user,passCODE,userEMAIL) VALUES(?,?,?)";
+            db.run(insert,[req.body.user,req.body.pass,txtdata[0]]);
+            sql = "select userId,user,userEMAIL from USERS where userEMAIL = ?";
+            params = [txtdata[0]];
+            db.all(sql, params, (err2,rows2) => {
+                res.json(rows2);
+            });
+
+        }
+    });
+});
 
 app.put("/api/users/:id", (req,res,next)=>
 
@@ -102,16 +137,22 @@ app.put("/api/users/:id", (req,res,next)=>
 )
 
 
-app.post("/api/upload/:id", upload.single("file"), (req, res) =>{
 
 
 
-   const x= res.json({ file: req.file})
+
+
+
+app.post("/api/upload", upload.single("file"), (req, res) =>{
+
+    res.json({ file: req.file })
+
+
 
 })
 
 app.post("/api/users/login", (req, res, next) => {
-    var sql = "select userId, user,passCODE,age,class,userRole, description, userEMAIL, cv from USERS WHERE passCode = ? AND user = ?";
+    var sql = "select userId, user,passCODE,age,class,userRole, description, userEMAIL from USERS WHERE passCode = ? AND user = ?";
     var params = [req.body.pass,req.body.user];
     db.all(sql, params, (err, rows) => {
         if (err) {
@@ -122,6 +163,8 @@ app.post("/api/users/login", (req, res, next) => {
         res.json(rows);
     });
 });
+
+
 
 
 app.get("/api/allusers", (req, res, next) => {
