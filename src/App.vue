@@ -26,7 +26,7 @@
 
     <section class="item4">
       <div class="item4-body">
-        <p>Copyright (c) 2020 by Tugb, Aisha, Husam .</p>
+        <p>Copyright (c) 2020 by Tugba, Aisha, Husamettin, Edwin, Joseph.</p>
       </div>
     </section>
 
@@ -79,6 +79,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
 
+
 }
 
   /*____________________________________________________*/
@@ -129,6 +130,7 @@
 .item3 {
   grid-area: sidebar;
   display:flex;
+    min-height: 785px;
 
 }
 .item3-body{
@@ -149,6 +151,7 @@
   width: 100%;
   background-color: #662246;
   color: #FFFFFF;
+  padding-top: 15px;
 }
 a {
     color: darkslategrey;

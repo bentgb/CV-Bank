@@ -16,9 +16,20 @@ const routes = [
     path: "/mypage",
     name: "mypage",
     component: () =>
-        import( "../views/mypage.vue")},
-
-
+        import( "../views/mypage.vue")
+  },
+  {
+    path: "/admin",
+    name: "admin",
+    component: () =>
+        import( "../components/admin.vue")
+  },
+  {
+    path: "/cvList",
+    name: "cvList",
+    component: () =>
+        import( "../components/cvList.vue")
+  },
 ];
 
 const router = new VueRouter({
