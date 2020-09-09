@@ -17,19 +17,19 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             'userRole TEXT,' +
             'userEMAIL TEXT )', (err) => {
 
-            if (err) {
-                // Table already created
-            } else {
-                // Table just created, creating some rows
-                var insert = 'INSERT INTO USERS (user,passCODE,age,class,userRole, userEMAIL) VALUES(?,?,?,?,?,?)'
-                db.run(insert, ["Aisha", "1234", 35, "Java", "student", "aisha@test.com"])
-                db.run(insert, ["Tugba", "1234", 37, "Java", "admin", "tugba@test.com"])
-                db.run(insert, ["Husamettin", "1234",37, "Java","student", "husamettin@test.com"])
-                db.run(insert, ["Edwin", "1234", 27, "Java","student","edwin@test.com"])
+                if (err) {
+                    // Table already created
+                } else {
+                    // Table just created, creating some rows
+                    var insert = 'INSERT INTO USERS (user,passCODE,age,class,userRole, userEMAIL, userImg) VALUES(?,?,?,?,?,?,?)'
+                    db.run(insert, ["Aisha", "1234", 35, "Java", "student", "aisha@test.com"])
+                    db.run(insert, ["Tugba", "1234", 37, "Java", "admin", "tugba@test.com"])
+                    db.run(insert, ["Husamettin", "1234", 37, "Java", "student", "husamettin@test.com"])
+                    db.run(insert, ["Edwin", "1234", 27, "Java", "student", "edwin@test.com"])
 
 
-            }
-        })
+                }
+            })
 
     }
 })

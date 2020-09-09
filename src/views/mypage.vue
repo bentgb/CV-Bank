@@ -3,16 +3,27 @@
     <div class="section content-title-group">
       <h2 class="title">STUDENT</h2>
     </div>
+    <b-form method="submit">
+      <b-form-file v-model="img" class="mt-3" plain></b-form-file>
+      <b-button type="submit" @click="image">Spara</b-button>
+    </b-form>
+
     <div class="mt-4">
-      <b-card img-src="./assets/test.png" img-alt="Card image" img-left class="mb-3">
-        <b-card-title>{{this.$parent.user.user}}</b-card-title>
-        <b-card-sub-title class="text-left">Ålder</b-card-sub-title>
-        <b-card-text class="text-left">{{this.$parent.user.age}}</b-card-text>
-        <b-card-sub-title class="text-left">Klass</b-card-sub-title>
-        <b-card-text class="text-left">{{this.$parent.user.class}}</b-card-text>
-        <b-card-sub-title class="text-left">E-post</b-card-sub-title>
-        <b-card-text class="text-left">{{this.$parent.user.userEMAIL}}</b-card-text>
+      <b-card
+        :img-src="require('../assets/' + form_img)"
+        img-alt="No image selected"
+        img-left
+        class="mb-3"
+      >
+        <b-card-title class="text-center ml-3">{{this.$parent.user.user}}</b-card-title>
+        <b-card-sub-title class="text-left ml-3 mb-2">Ålder</b-card-sub-title>
+        <b-card-text class="text-left ml-4 mb-2">{{this.$parent.user.age}}</b-card-text>
+        <b-card-sub-title class="text-left ml-3 mb-2">Klass</b-card-sub-title>
+        <b-card-text class="text-left ml-4 mb-2">{{this.$parent.user.class}}</b-card-text>
+        <b-card-sub-title class="text-left ml-3 mb-2">E-post</b-card-sub-title>
+        <b-card-text class="text-left ml-4 mb-2">{{this.$parent.user.userEMAIL}}</b-card-text>
       </b-card>
+
       <b-form-group class="text-left" label="Beskrivning" label-for="textarea-lazy">
         <b-form-textarea
           id="textarea-lazy"
@@ -59,7 +70,9 @@ export default {
         betyg: null,
         pb: null
       },
-      message: "test"
+      form_img: "test.png",
+      message: "test",
+      img: null
     };
   },
   methods: {
@@ -68,8 +81,25 @@ export default {
     },
     saveHero() {
       this.message = JSON.stringify(this.hero, null, "\n");
+    },
+    image() {
+      this.form_img = this.img.name;
+      // fetch("api/users", {
+      //   body: JSON.stringify({
+      //     form_img: this.img.name
+      //   }),
+      //   headers: {
+      //     "Content-Type": "application/json"
+      //   },
+      //   method: "POST"
+      // })
+      //   .then(response => response.json())
+      //   .then(result => {
+      //     // if()
+      //   });
     }
-  } /*
+  }
+  /*
       mounted(){
         fetch('http://127.0.0.1:3000/api/users/')
                 .then((response) => {

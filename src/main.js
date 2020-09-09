@@ -1,9 +1,8 @@
 import Vue from "vue";
-import "./plugins/bootstrap-vue"
+import "./Plugins/Bootstrap-vue"
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import "./Plugins/Bootstrap-vue"
 
 
 
