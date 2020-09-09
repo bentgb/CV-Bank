@@ -15,12 +15,20 @@ app.use(express.static('public'));
 
 
 var storage = multer.diskStorage({
+
     destination: function(req, file, cb) {
         cb(null, './uploads/');
     },
     filename: function(req, file, cb) {
-        cb(null, file.originalname);
+
+
+        cb(null, file.originalname     );
     }
+
+
+
+
+
 });
 
 var upload = multer({ storage: storage });
@@ -108,16 +116,24 @@ app.put("/api/users/:id", (req,res,next)=>
 
 
 
-app.post("/api/upload", upload.single("file"), (req, res) =>{
-   var x=res.json({ file: req.file})
+app.post("/api/upload/:id", upload.single("file"), (req, res) =>{
 
-x
+
+
+   const x= res.json({ file: req.file})
+
+
+
+
+
+
+
 
 
 })
 
 app.post("/api/users/login", (req, res, next) => {
-    var sql = "select userId, user,passCODE,age,class,userRole, description, userEMAIL from USERS WHERE passCode = ? AND user = ?";
+    var sql = "select userId, user,passCODE,age,class,userRole, description, userEMAIL, cv from USERS WHERE passCode = ? AND user = ?";
     var params = [req.body.pass,req.body.user];
     db.all(sql, params, (err, rows) => {
         if (err) {

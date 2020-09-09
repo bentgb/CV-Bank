@@ -29,7 +29,7 @@
         top: 0;
         padding: 10px;
         height: 200px;
-        width: 100%;
+        width: 100%;}
         span {
             font-size: 18px;
             text-align: center;
@@ -41,7 +41,7 @@
         h2 {
             margin-top: 10px;
         }
-    }
+
     .event-date {
         background-color: #151515;
         color: #FFF;
