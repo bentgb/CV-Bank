@@ -21,6 +21,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             'userEMAIL TEXT,' +
             'cv TEXT )', (err) => {
 
+
             if (err) {
                 // Table already created
             } else {
@@ -34,6 +35,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
 
             }
         })
+
 
     }
 })

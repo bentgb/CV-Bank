@@ -19,16 +19,8 @@ var storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, './uploads/');
     },
-    filename: function(req, file, cb) {
-
-
-        cb(null, file.originalname     );
+    filename: function(req, file, cb) { cb(null, file.originalname     );
     }
-
-
-
-
-
 });
 
 var upload = multer({ storage: storage });
@@ -110,25 +102,11 @@ app.put("/api/users/:id", (req,res,next)=>
 )
 
 
-
-
-
-
-
-
 app.post("/api/upload/:id", upload.single("file"), (req, res) =>{
 
 
 
    const x= res.json({ file: req.file})
-
-
-
-
-
-
-
-
 
 })
 
@@ -144,8 +122,6 @@ app.post("/api/users/login", (req, res, next) => {
         res.json(rows);
     });
 });
-
-
 
 
 app.get("/api/allusers", (req, res, next) => {
