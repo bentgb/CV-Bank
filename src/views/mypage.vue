@@ -5,13 +5,13 @@
     </div>
     <b-form method="submit">
       <b-form-file v-model="img" class="mt-3" plain></b-form-file>
-      <b-button type="submit" @click="image">Spara</b-button>
+      <p type="submit" @click="image">Change</p>
     </b-form>
 
     <div class="mt-4">
       <b-card
         :img-src="require('../assets/' + form_img)"
-        img-alt="No image selected"
+        :img-alt="'No image selected'"
         img-left
         class="mb-3"
       >
