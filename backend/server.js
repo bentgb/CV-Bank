@@ -143,13 +143,38 @@ app.put("/api/users/:id", (req,res,next)=>
 
 
 
-app.post("/api/upload", upload.single("file"), (req, res) =>{
+app.post("/api/upload/:id", upload.single("file"), (req, res) =>{
 
-    res.json({ file: req.file })
+    if (!req.file) {
+            console.log("No file received");
+            alert("Error! in file upload.");
+
+
+        } else {
+            console.log('file received');
+            var sql = 'UPDATE USERS SET CVpath= ? WHERE userId = ?'
+            var params =[req.file.filePath,req.params.id]
+            db.run(sql, params, function (err, result) {
+                if (err){
+                    res.status(400).json({"error": err.message})
+                    return;
+                }
+                res.json({
+                    "message": "success",
+                    "file": req.file,
+                    "id": req.params.id
+                })
 
 
 
-})
+            });
+
+
+
+        }
+    })
+
+
 
 app.post("/api/users/login", (req, res, next) => {
     var sql = "select userId, user,passCODE,age,class,userRole, description, userEMAIL from USERS WHERE passCode = ? AND user = ?";
