@@ -23,7 +23,11 @@ var storage = multer.diskStorage({
     }
 });
 
-var upload = multer({ storage: storage });
+var upload = multer({ storage: storage,
+    limits:{
+    fileSize:10*1024*1024
+    },
+});
 
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -140,7 +144,9 @@ app.put("/api/users/:id", (req,res,next)=>
 
 
 app.post("/api/upload", upload.single("file"), (req, res) =>{
+
     res.json({ file: req.file })
+
 
 
 })
