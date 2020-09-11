@@ -6,8 +6,10 @@ var db = require("./dataDB.js");
 var multer = require("multer");
 
 
+
 app.use(cors());
 app.use(express.static('public'));
+
 
 /*var upload = multer({
     dest:"./uploads/"
@@ -19,7 +21,7 @@ var storage = multer.diskStorage({
         cb(null, './uploads/');
     },
     filename: function(req, file, cb) {
-        cb(null, file.originalname);
+        cb(null, req.params.id +"CV.pdf");
     }
 });
 
@@ -72,6 +74,12 @@ app.get('/api/users/:id', (request, response, next) => {
 
     });
 });
+app.get('/api/uploads/:id', (request, response, next) => {
+    console.log(request.params.id)
+        response.sendFile("C:\\Users\\tugba\\WebstormProjects\\cvbank\\backend\\uploads\\"+ request.params.id +"CV.pdf"  )
+
+
+    });
 
 //<editor-fold desc="User handle">
 app.put("/api/new_user", (req, res, next) => {
@@ -152,8 +160,9 @@ app.post("/api/upload/:id", upload.single("file"), (req, res) =>{
 
         } else {
             console.log('file received');
+
             var sql = 'UPDATE USERS SET CVpath= ? WHERE userId = ?'
-            var params =[req.file.filePath,req.params.id]
+            var params =[req.file.path,req.params.id]
             db.run(sql, params, function (err, result) {
                 if (err){
                     res.status(400).json({"error": err.message})
@@ -161,16 +170,11 @@ app.post("/api/upload/:id", upload.single("file"), (req, res) =>{
                 }
                 res.json({
                     "message": "success",
-                    "file": req.file,
+                    "filePath": req.file.path,
                     "id": req.params.id
                 })
 
-
-
             });
-
-
-
         }
     })
 

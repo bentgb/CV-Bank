@@ -137,7 +137,7 @@ export default {
     },
 
     readFile() {
-      window.open("http://localhost:3000/api/uploads/Aisha.pdf", "_blank"); //to open in new tab
+      window.open("http://localhost:3000/api/uploads/"+this.$parent.user.userId, "_blank"); //to open in new tab
     },
 
 
