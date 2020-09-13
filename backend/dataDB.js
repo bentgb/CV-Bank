@@ -19,18 +19,19 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             'userRole TEXT,' +
             'description TEXT,' +
             'userEMAIL TEXT,' +
-            'CVpath TEXT )', (err) => {
+            'CVpath TEXT ,' +
+            'photoPath TEXT )', (err) => {
 
 
             if (err) {
                 // Table already created
             } else {
                 // Table just created, creating some rows
-                var insert = 'INSERT INTO USERS (userId, user,passCODE,age,class,userRole, description , userEMAIL, CVpath) VALUES(?,?,?,?,?,?,?,?,?)'
-                db.run(insert, [10, "Aisha", "1234", 35, "Java", "student", "describe Aisha" ,"aisha@test.com", ""])
-                db.run(insert, [20, "Tugba", "1234", 37, "Java", "admin", "describe Tugba", "tugba@test.com", ""])
-                db.run(insert, [30, "Husamettin", "1234",37, "Java","student", "describe Husamettin","husamettin@test.com", ""])
-                db.run(insert, [40, "Edwin", "1234", 27, "Java","student","describe Edwin", "edwin@test.com", ""])
+                var insert = 'INSERT INTO USERS (userId, user,passCODE,age,class,userRole, description , userEMAIL, CVpath, photoPath) VALUES(?,?,?,?,?,?,?,?,?,?)'
+                db.run(insert, [10, "Aisha", "1234", 35, "Java", "student", "describe Aisha" ,"aisha@test.com", "", "test.jpg"])
+                db.run(insert, [20, "Tuba", "1234", 37, "Java", "admin", "describe Tugba", "tugba@test.com", "", "test.jpg"])
+                db.run(insert, [30, "Husam", "1234",37, "Java","student", "describe Husam","husam@test.com", "", "test.jpg"])
+                db.run(insert, [40, "Edwin", "1234", 27, "Java","student","describe Edwin", "edwin@test.com", "", "test.jpg"])
 
 
             }
