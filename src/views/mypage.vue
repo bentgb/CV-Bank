@@ -63,13 +63,18 @@
         <b-button class="mr-0 mt-1" size="sm" v-on:click="readFile()">open</b-button>
       </div>
 
-      <h5 class="text-left">Ladda upp personligt brev</h5>
+      <h5 class="text-left" >Ladda upp personligt brev</h5>
       <b-form-file
-          :state="Boolean(pb)"
-          placeholder="Välj en fil eller dra filen hit..."
-          drop-placeholder="Dra filen hit"
+          accept=".pdf"
+          enctype="multipart/form-data"
+          ref="file"
+          v-model="file"
+          v-on:change="handleFileUpload()"
+          placeholder="Välj en .pdf fil eller släpp den här ...
+"
+          drop-placeholder="Släpp .pdf filen här som ..."
       ></b-form-file>
-      <b-button class="mr-0 mt-1" size="sm">Spara</b-button>
+      <b-button class="mr-0 mt-1" size="sm" v-on:click="submitCoverLetter()" >Spara</b-button>
       <h5 class="text-left">Ladda upp betyg</h5>
       <b-form-file
           :state="Boolean(betyg)"
@@ -100,6 +105,7 @@ export default {
       this.file = this.$refs.file.files[0];
     },
 
+
     async submitFile() {
       const formData = new FormData();
       formData.append("file", this.file);
@@ -109,6 +115,24 @@ export default {
           this.message = "uploaded";
           this.fileUploaded = true;
           alert("File uploaded");
+        } else {
+          alert("Choose a File ");
+
+        }
+      } catch (e) {
+        this.message = "Sth went wrong";
+      }
+    },
+
+    async submitCoverLetter() {
+      const formData = new FormData();
+      formData.append("file", this.file);
+      try {
+        if (this.file != "") {
+          axios.post("http://127.0.0.1:3000/api/coverletters/" + this.$parent.user.userId, formData);
+          this.message = "uploaded";
+          this.fileUploaded = true;
+          alert("cover letter uploaded");
         } else {
           alert("Choose a File ");
 
