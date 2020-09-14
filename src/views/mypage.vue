@@ -107,9 +107,8 @@ export default {
         if (this.file != "") {
           axios.post("http://127.0.0.1:3000/api/upload/" + this.$parent.user.userId, formData);
           this.message = "uploaded";
-          this.fileUploaded = true;
-          alert("File uploaded");
-        } else {
+          this.fileUploaded = true;}
+          else {
           alert("Choose a File ");
 
         }
