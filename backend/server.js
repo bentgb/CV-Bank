@@ -5,16 +5,8 @@ var cors = require('cors');
 var db = require("./dataDB.js");
 var multer = require("multer");
 
-
-
 app.use(cors());
 app.use(express.static('public'));
-
-
-/*var upload = multer({
-    dest:"./uploads/"
-})*/
-
 
 var storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -75,44 +67,12 @@ app.get('/api/users/:id', (request, response, next) => {
     });
 });
 app.get('/api/uploads/:id', (request, response, next) => {
-    console.log(request.params.id)
-        response.sendFile("C:\\Users\\tugba\\WebstormProjects\\cvbank\\backend\\uploads\\"+ request.params.id +"CV.pdf"  )
-
+    var options = {'root':"uploads"};
+    response.sendFile(`${request.params.id}CV.pdf`,options);
 
     });
 
 //<editor-fold desc="User handle">
-app.put("/api/new_user", (req, res, next) => {
-
-    var txtdata=req.body.email.toString();
-    txtdata=txtdata.toLowerCase();
-    txtdata=[txtdata];
-    txtdata.push(req.body.user.toString());
-    var sql = "select userId from USERS where userEMAIL = ? OR user = ?";
-    var params = txtdata;
-    db.all(sql, params, (err, rows) => {
-        if (err) {
-            res.status(400).json({"error": err.message});
-            return;
-        }
-        if (rows.length === 1) {
-            res.json({
-                "Message":"User already exists"
-            })
-
-        }else{
-            insert = "INSERT INTO USERS (user,passCODE,userEMAIL) VALUES(?,?,?)";
-            db.run(insert,[req.body.user,req.body.pass,txtdata[0]]);
-            sql = "select userId,user,userEMAIL from USERS where userEMAIL = ?";
-            params = [txtdata[0]];
-            db.all(sql, params, (err2,rows2) => {
-                res.json(rows2);
-            });
-
-        }
-    });
-});
-
 app.put("/api/users/:id", (req,res,next)=>
 
     {
@@ -143,12 +103,6 @@ app.put("/api/users/:id", (req,res,next)=>
     }
 
 )
-
-
-
-
-
-
 
 
 app.post("/api/upload/:id", upload.single("file"), (req, res) =>{
