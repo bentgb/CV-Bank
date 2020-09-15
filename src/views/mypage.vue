@@ -26,7 +26,7 @@
         <b-card-text class="text-left">{{ this.$parent.user.userId }}</b-card-text>
       </b-card>
 
-      <b-form-group class="text-left" label="Beskrivning" label-for="textarea-lazy">
+      <b-form-group class="text-left" label="Description" label-for="textarea-lazy">
         <b-form-textarea
             v-model="desc"
             id="textarea-lazy"
@@ -36,47 +36,67 @@
         ></b-form-textarea>
         <b-button class="mr-0 mt-1" size="sm" @click="saveDescription()">Save</b-button>
       </b-form-group>
-      <h5 class="text-left">Ladda upp cv</h5>
+      <h5 class="text-left">Upload CV</h5>
 
       <b-form-group id="image-group">
-        <b-form-file
+        <b-form-file name="resume"
             accept=".pdf"
             enctype="multipart/form-data"
             ref="file"
             v-model="file"
             v-on:change="handleFileUpload()"
-            placeholder="Välj en .pdf fil eller släpp den här ...
-"
+            placeholder="Select a pdf file or drop it here ..."
             drop-placeholder="Släpp .pdf filen här som ..."
         />
-        <b-button class="mr-0 mt-1" size="sm" v-on:click="submitFile()">Spara</b-button>
+        <b-button class="mr-0 mt-1" size="sm" v-on:click="submitFile()">Save</b-button>
+        <a href="" v-if="resumeExists" v-on:click="readResume()"> You already have an uploaded CV. Would u like to see it?</a>
       </b-form-group>
       <div v-if="fileUploaded">
-        {{ this.file.name }} is uploaded
-        <!--        <a href="#" onclick="window.open('./uploads/Aisha.pdf', '_blank', 'fullscreen=yes'); return false;">MyPDF</a>-->
-        <!--        <a href="./uploads/Aisha.pdf">Mypdf</a>-->
+     {{ this.file.name }} is uploaded
+
+<!--                <a -->
+<!--                    href=`http://localhost:3000/api/uploads/resumes/${this.$parent.user.userId}`-->
+<!--                >Mypdf</a>-->
         <!--
         <iframe :src="getPDFPath()" style="width:200px; height:200px; border: none;">
           Oops! an error has occurred.
         </iframe>
         -->
-        <b-button class="mr-0 mt-1" size="sm" v-on:click="readFile()">open</b-button>
+        <b-button class="mr-0 mt-1" size="sm" v-on:click="readResume()">Open</b-button>
       </div>
 
-      <h5 class="text-left">Ladda upp personligt brev</h5>
-      <b-form-file
-          :state="Boolean(pb)"
-          placeholder="Välj en fil eller dra filen hit..."
-          drop-placeholder="Dra filen hit"
+      <h5 class="text-left">Upload cover letter</h5>
+      <b-form-file name="coverletter"
+                   accept=".pdf"
+                   enctype="multipart/form-data"
+                   ref="file"
+                   v-model="file"
+                   v-on:change="handleFileUpload()"
+                   placeholder="Select a pdf file or drop it here ..."
+                   drop-placeholder="Släpp .pdf filen här som ..."
       ></b-form-file>
-      <b-button class="mr-0 mt-1" size="sm">Spara</b-button>
-      <h5 class="text-left">Ladda upp betyg</h5>
-      <b-form-file
-          :state="Boolean(betyg)"
-          placeholder="Välj en fil eller dra filen hit..."
-          drop-placeholder="Dra filen hit"
+      <b-button class="mr-0 mt-1" size="sm" v-on:click="submitCoverLetter()">Save</b-button>
+      <div v-if="fileUploaded">
+        {{ this.file.name }} is uploaded
+
+        <b-button class="mr-0 mt-1" size="sm" v-on:click="readCoverLetter()">Open</b-button>
+      </div>
+      <h5 class="text-left">Upload Certicate</h5>
+      <b-form-file name="certificate"
+                   accept=".pdf"
+                   enctype="multipart/form-data"
+                   ref="file"
+                   v-model="file"
+                   v-on:change="handleFileUpload()"
+                   placeholder="Select a pdf file or drop it here ..."
+                   drop-placeholder="Släpp .pdf filen här som ..."
       ></b-form-file>
-      <b-button class="mr-0 mt-1" size="sm">Spara</b-button>
+      <b-button class="mr-0 mt-1" size="sm" v-on:click="submitCertificate()">Save</b-button>
+      <div v-if="fileUploaded">
+        {{ this.file.name }} is uploaded
+
+        <b-button class="mr-0 mt-1" size="sm" v-on:click="readCertificate()">Open</b-button>
+      </div>
     </div>
   </b-container>
 </template>
@@ -90,6 +110,7 @@ export default {
       desc: "",
       file: "",
       fileUploaded: false,
+      resumeExists:false,
       message: "test",
       form_img: "test.png",
       img: null
@@ -100,15 +121,66 @@ export default {
       this.file = this.$refs.file.files[0];
     },
 
+    checkResume(){
+      var myResume = new File(`../resumes/${this.$parent.user.userId}resume.pdf`);
+
+
+// See if the file exists
+      if(myResume.exists()){
+        this.resumeExists=true;
+      }else{
+        console.log('The file does not exist');
+      }
+
+
+    },
+
+
     async submitFile() {
       const formData = new FormData();
-      formData.append("file", this.file);
+      formData.append("resume", this.file);
       try {
         if (this.file != "") {
-          axios.post("http://127.0.0.1:3000/api/upload/" + this.$parent.user.userId, formData);
+          axios.post("http://127.0.0.1:3000/api/upload/resume/" + this.$parent.user.userId, formData);
           this.message = "uploaded";
-          this.fileUploaded = true;}
-          else {
+          this.fileUploaded = true;
+        } else {
+          alert("Choose a File ");
+
+        }
+      } catch (e) {
+        this.message = "Sth went wrong";
+      }
+    },
+
+    async submitCoverLetter() {
+      const formData = new FormData();
+      formData.append("coverletter", this.file);
+      try {
+        if (this.file != "") {
+          axios.post("http://127.0.0.1:3000/api/upload/coverletter/" + this.$parent.user.userId, formData);
+          this.message = "uploaded";
+          this.fileUploaded = true;
+          alert("cover letter uploaded");
+        } else {
+          alert("Choose a File ");
+
+        }
+      } catch (e) {
+        this.message = "Sth went wrong";
+      }
+    },
+
+    async submitCertificate() {
+      const formData = new FormData();
+      formData.append("certificate", this.file);
+      try {
+        if (this.file != "") {
+          axios.post("http://127.0.0.1:3000/api/upload/certificate/" + this.$parent.user.userId, formData);
+          this.message = "uploaded";
+          this.fileUploaded = true;
+          alert("cover letter uploaded");
+        } else {
           alert("Choose a File ");
 
         }
@@ -135,8 +207,17 @@ export default {
       }
     },
 
-    readFile() {
-      window.open("http://localhost:3000/api/uploads/"+this.$parent.user.userId, "_blank"); //to open in new tab
+    readResume() {
+      window.open("http://localhost:3000/api/uploads/resumes/" + this.$parent.user.userId, "_blank"); //to open in new tab
+    },
+
+    readCoverLetter() {
+      window.open("http://localhost:3000/api/uploads/coverletters/" + this.$parent.user.userId, "_blank"); //to open in new tab
+    },
+
+
+    readCertificate() {
+      window.open("http://localhost:3000/api/uploads/certificates/" + this.$parent.user.userId, "_blank"); //to open in new tab
     },
 
 
