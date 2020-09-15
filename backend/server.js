@@ -3,16 +3,30 @@ var app = express();
 var cors = require('cors');
 var db = require("./dataDB.js");
 var multer = require("multer");
+const path = require('path');
 app.use(cors());
 app.use(express.static('public'));
 var storage = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, './uploads/');
+
+        if (file.fieldname === "resume") { // if uploading resume
+            cb(null, './resumes/');
+        }else if (file.fieldname === "coverletter"){ // else uploading coverletter
+            cb(null, './coverletters/');
+        }
+        else if (file.fieldname === "certificate"){ // else uploading coverletter
+            cb(null, './certificates/');
+        }
+
+        else { // else uploading image
+            cb(null, './images/');
+        }
     },
-    filename: function(req, file, cb) {
-        cb(null, req.params.id +"CV.pdf");
+    filename: (req, file, cb) => { // naming file
+        cb(null, req.params.id+file.fieldname+path.extname(file.originalname));
     }
 });
+
 var upload = multer({ storage: storage,
     limits:{
         fileSize:10*1024*1024
@@ -55,10 +69,20 @@ app.get('/api/users/:id', (request, response, next) => {
         })
     });
 });
-app.get('/api/uploads/:id', (request, response, next) => {
-    var options = {'root':"uploads"};
-    response.sendFile(`${request.params.id}CV.pdf`,options);
+
+app.get('/api/uploads/resumes/:id', (request, response, next) => {
+    var options = {'root':"resumes"};
+    response.sendFile(`${request.params.id}resume.pdf`,options);
 });
+app.get('/api/uploads/coverletters/:id', (request, response, next) => {
+    var options = {'root':"coverletters"};
+    response.sendFile(`${request.params.id}coverletter.pdf`,options);
+});
+app.get('/api/uploads/certificates/:id', (request, response, next) => {
+    var options = {'root':"certificates"};
+    response.sendFile(`${request.params.id}certificate.pdf`,options);
+});
+
 //<editor-fold desc="User handle">
 app.put("/api/users/:id", (req,res,next)=>
     {
@@ -81,7 +105,7 @@ app.put("/api/users/:id", (req,res,next)=>
         });
     }
 )
-app.post("/api/upload/:id", upload.single("file"), (req, res) =>{
+app.post("/api/upload/resume/:id", upload.single("resume"), (req, res) =>{
     if (!req.file) {
         console.log("No file received");
         alert("Error! in file upload.");
@@ -96,12 +120,68 @@ app.post("/api/upload/:id", upload.single("file"), (req, res) =>{
             }
             res.json({
                 "message": "success",
-                "filePath": req.file.path,
+                "filePath": req.file,
                 "id": req.params.id
             })
         });
     }
 })
+app.post("/api/upload/coverletter/:id", upload.single("coverletter"), (req, res) =>{
+    if (!req.file) {
+        console.log("No file received");
+        alert("Error! in file upload.");
+    } else {
+        console.log('file received');
+        res.json({
+            "message": "success",
+            "filePath": req.file,
+            "id": req.params.id
+        })
+
+/*        var sql = 'UPDATE USERS SET CVpath= ? WHERE userId = ?'
+        var params =[req.file.path,req.params.id]
+        db.run(sql, params, function (err, result) {
+            if (err){
+                res.status(400).json({"error": err.message})
+                return;
+            }
+            res.json({
+                "message": "success",
+                "filePath": req.file,
+                "id": req.params.id
+            })
+        });*/
+    }
+})
+app.post("/api/upload/certificate/:id", upload.single("certificate"), (req, res) =>{
+    if (!req.file) {
+        console.log("No file received");
+        alert("Error! in file upload.");
+    } else {
+        console.log('file received');
+        res.json({
+            "message": "success",
+            "filePath": req.file,
+            "id": req.params.id
+        })
+
+/*        var sql = 'UPDATE USERS SET CVpath= ? WHERE userId = ?'
+        var params =[req.file.path,req.params.id]
+        db.run(sql, params, function (err, result) {
+            if (err){
+                res.status(400).json({"error": err.message})
+                return;
+            }
+            res.json({
+                "message": "success",
+                "filePath": req.file,
+                "id": req.params.id
+            })
+        });*/
+    }
+})
+
+
 app.post("/api/users/login", (req, res, next) => {
     var sql = "select userId, user,passCODE,age,class,userRole, description, userEMAIL from USERS WHERE passCode = ? AND user = ?";
     var params = [req.body.pass,req.body.user];
