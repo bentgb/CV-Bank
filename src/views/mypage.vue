@@ -1,4 +1,4 @@
-<template>
+<template xmlns:http="http://www.w3.org/1999/xhtml">
   <b-container>
     <div class="section content-title-group">
       <h2 class="title">STUDENT</h2>
@@ -32,7 +32,7 @@
             id="textarea-lazy"
             :placeholder="this.$parent.user.description"
             lazy-formatter
-            :formatter="formatter"
+
         ></b-form-textarea>
         <b-button class="mr-0 mt-1" size="sm" @click="saveDescription()">Save</b-button>
       </b-form-group>
@@ -49,8 +49,10 @@
             drop-placeholder="Släpp .pdf filen här som ..."
         />
         <b-button class="mr-0 mt-1" size="sm" v-on:click="submitFile()">Save</b-button>
-        <a href="" v-if="resumeExists" v-on:click="readResume()"> You already have an uploaded CV. Would u like to see it?</a>
-      </b-form-group>
+       </b-form-group>
+        <!--<div v-show="checkResume">
+            <b-button  v-on:click="readResume()"> My CV</b-button>
+        </div>-->
       <div v-if="fileUploaded">
      {{ this.file.name }} is uploaded
 
@@ -62,9 +64,19 @@
           Oops! an error has occurred.
         </iframe>
         -->
-        <b-button class="mr-0 mt-1" size="sm" v-on:click="readResume()">Open</b-button>
+        <b-button class="mr-0 mt-1" size="sm" v-on:click="showModal">Open</b-button>
       </div>
-
+        <div>
+            <b-modal ref="my-modal" hide-footer>
+                <div class="d-block text-center">
+                    <b-embed
+                            type="iframe"
+                            aspect="16by9"
+                            src="http://localhost:3000/api/uploads/resumes/10"
+                    ></b-embed>
+                </div>
+            </b-modal>
+        </div>
       <h5 class="text-left">Upload cover letter</h5>
       <b-form-file name="coverletter"
                    accept=".pdf"
@@ -108,33 +120,32 @@ export default {
   data() {
     return {
       desc: "",
-      file: "",
+      file: null,
       fileUploaded: false,
-      resumeExists:false,
       message: "test",
       form_img: "test.png",
       img: null
     };
   },
-  methods: {
+    computed: {
+        // a computed getter
+        checkResume: function () {
+            const fs = require('fs')
+            const path = `../resumes/${this.$parent.user.userId}resume.pdf`;
+// See if the file exists
+                if(fs.existsSync(path)){
+                    return true;
+
+                }else{
+                    return false;
+                }
+            },
+
+        },
+      methods: {
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
     },
-
-    checkResume(){
-      var myResume = new File(`../resumes/${this.$parent.user.userId}resume.pdf`);
-
-
-// See if the file exists
-      if(myResume.exists()){
-        this.resumeExists=true;
-      }else{
-        console.log('The file does not exist');
-      }
-
-
-    },
-
 
     async submitFile() {
       const formData = new FormData();
@@ -208,7 +219,8 @@ export default {
     },
 
     readResume() {
-      window.open("http://localhost:3000/api/uploads/resumes/" + this.$parent.user.userId, "_blank"); //to open in new tab
+        "http://localhost:3000/api/uploads/resumes/" + this.$parent.user.userId;
+      //to open in new tab
     },
 
     readCoverLetter() {
@@ -220,7 +232,12 @@ export default {
       window.open("http://localhost:3000/api/uploads/certificates/" + this.$parent.user.userId, "_blank"); //to open in new tab
     },
 
-
+          showModal() {
+              this.$refs["my-modal"].show();
+          },
+          hideModal() {
+              this.$refs["my-modal"].hide();
+          },
     image() {
       this.form_img = this.img.name;
     }
