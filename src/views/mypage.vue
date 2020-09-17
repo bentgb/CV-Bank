@@ -183,7 +183,7 @@ export default {
       const formData = new FormData();
       formData.append("coverletter", this.fileCoverLetter);
       try {
-        if (this.file != "") {
+        if (this.fileCoverLetter != "") {
           axios.post("http://127.0.0.1:3000/api/upload/coverletter/" + this.$parent.user.userId, formData);
           this.message = "uploaded";
           this.coverletterUploaded = true;
