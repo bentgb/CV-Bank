@@ -15,6 +15,8 @@
           img-left
           class="mb-3"
       >
+
+          <!----------   user info    ------------->
         <b-card-title class="text-center mr-5">{{ this.$parent.user.user }}</b-card-title>
         <b-card-sub-title class="text-left ml-2 mb-2">Ålder</b-card-sub-title>
         <b-card-text class="text-left ml-4 mb-2">{{ this.$parent.user.age }}</b-card-text>
@@ -23,10 +25,10 @@
         <b-card-sub-title class="text-left ml-2 mb-2">E-post</b-card-sub-title>
         <b-card-text class="text-left ml-4 mb-2">{{ this.$parent.user.userEMAIL }}</b-card-text>
         <b-card-sub-title class="text-left">ID</b-card-sub-title>
-        <b-card-text class="text-left">{{ this.$parent.user.userId }}</b-card-text>
-      </b-card>
+        <b-card-text class="text-left">{{ this.$parent.user.userId }}</b-card-text> </b-card>
 
-      <b-form-group class="text-left" label="Description" label-for="textarea-lazy">
+        <!----------   Description    ------------->
+        <b-form-group class="text-left" label="Description" label-for="textarea-lazy">
         <b-form-textarea
             v-model="desc"
             id="textarea-lazy"
@@ -36,9 +38,10 @@
         ></b-form-textarea>
         <b-button class="mr-0 mt-1" size="sm" @click="saveDescription()">Save</b-button>
       </b-form-group>
-      <h5 class="text-left">Upload CV</h5>
 
-      <b-form-group id="image-group">
+       <!----------   CV    ------------->
+       <h5 class="text-left">Upload CV</h5>
+       <b-form-group id="image-group">
         <b-form-file name="resume"
             accept=".pdf"
             enctype="multipart/form-data"
@@ -53,7 +56,7 @@
         <!--<div v-show="checkResume">
             <b-button  v-on:click="readResume()"> My CV</b-button>
         </div>-->
-      <div v-if="fileUploaded">
+       <div v-if="fileUploaded">
      {{ this.file.name }} is uploaded
 
 <!--                <a -->
@@ -77,41 +80,49 @@
                 </div>
             </b-modal>
         </div>
-      <h5 class="text-left">Upload cover letter</h5>
-      <b-form-file name="coverletter"
+
+
+        <!----------   cover letter    ------------->
+        <h5 class="text-left">Upload cover letter</h5>
+        <b-form-file name="coverletter"
                    accept=".pdf"
                    enctype="multipart/form-data"
                    ref="file"
-                   v-model="file"
+                   v-model="fileCoverLetter"
                    v-on:change="handleFileUpload()"
                    placeholder="Select a pdf file or drop it here ..."
                    drop-placeholder="Släpp .pdf filen här som ..."
       ></b-form-file>
-      <b-button class="mr-0 mt-1" size="sm" v-on:click="submitCoverLetter()">Save</b-button>
-      <div v-if="fileUploaded">
-        {{ this.file.name }} is uploaded
+        <b-button class="mr-0 mt-1" size="sm" v-on:click="submitCoverLetter()">Save</b-button>
+         <div v-if="coverletterUploaded">
+        {{ this.fileCoverLetter.name }} is uploaded
 
         <b-button class="mr-0 mt-1" size="sm" v-on:click="readCoverLetter()">Open</b-button>
       </div>
-      <h5 class="text-left">Upload Certicate</h5>
+
+
+        <!----------   certificate    ------------->
+        <h5 class="text-left">Upload Certicate</h5>
       <b-form-file name="certificate"
                    accept=".pdf"
                    enctype="multipart/form-data"
                    ref="file"
-                   v-model="file"
+                   v-model="fileBetyg"
                    v-on:change="handleFileUpload()"
                    placeholder="Select a pdf file or drop it here ..."
                    drop-placeholder="Släpp .pdf filen här som ..."
       ></b-form-file>
       <b-button class="mr-0 mt-1" size="sm" v-on:click="submitCertificate()">Save</b-button>
-      <div v-if="fileUploaded">
-        {{ this.file.name }} is uploaded
-
+      <div v-if="betygUploaded">
+        {{ this.fileBetyg.name }} is uploaded
         <b-button class="mr-0 mt-1" size="sm" v-on:click="readCertificate()">Open</b-button>
       </div>
     </div>
   </b-container>
 </template>
+
+
+
 <script>
 import axios from "axios";
 
@@ -121,8 +132,12 @@ export default {
     return {
       desc: "",
       file: null,
+      fileCoverLetter: null,
+      fileBetyg: null,
       fileUploaded: false,
-      message: "test",
+      betygUploaded: false,
+      coverletterUploaded: false,
+        message: "test",
       form_img: "test.png",
       img: null
     };
@@ -166,12 +181,12 @@ export default {
 
     async submitCoverLetter() {
       const formData = new FormData();
-      formData.append("coverletter", this.file);
+      formData.append("coverletter", this.fileCoverLetter);
       try {
         if (this.file != "") {
           axios.post("http://127.0.0.1:3000/api/upload/coverletter/" + this.$parent.user.userId, formData);
           this.message = "uploaded";
-          this.fileUploaded = true;
+          this.coverletterUploaded = true;
           alert("cover letter uploaded");
         } else {
           alert("Choose a File ");
@@ -184,12 +199,12 @@ export default {
 
     async submitCertificate() {
       const formData = new FormData();
-      formData.append("certificate", this.file);
+      formData.append("certificate", this.fileBetyg);
       try {
-        if (this.file != "") {
+        if (this.fileBetyg != "") {
           axios.post("http://127.0.0.1:3000/api/upload/certificate/" + this.$parent.user.userId, formData);
           this.message = "uploaded";
-          this.fileUploaded = true;
+          this.betygUploaded = true;
           alert("cover letter uploaded");
         } else {
           alert("Choose a File ");
@@ -232,15 +247,18 @@ export default {
       window.open("http://localhost:3000/api/uploads/certificates/" + this.$parent.user.userId, "_blank"); //to open in new tab
     },
 
-          showModal() {
+    showModal() {
               this.$refs["my-modal"].show();
           },
-          hideModal() {
+
+    hideModal() {
               this.$refs["my-modal"].hide();
           },
+
     image() {
       this.form_img = this.img.name;
     }
+
     // fetch("api/users", {
     //   body: JSON.stringify({
     //     form_img: this.img.name
@@ -256,10 +274,6 @@ export default {
     //   })
   }
 
-  /* getPDFPath(){
-      return './uploads/Aisha.pdf'
-
-    },*/
 
 }
 </script>
