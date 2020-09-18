@@ -36,12 +36,12 @@
             lazy-formatter
 
         ></b-form-textarea>
-        <b-button class="mr-0 mt-1" size="sm" @click="saveDescription()">Save</b-button>
+        <b-button class="mr-0 mt-1" size="sm" @click="saveDescription()">Save / Update</b-button>
       </b-form-group>
 
        <!----------   CV    ------------->
-       <h5 class="text-left">Upload CV</h5>
-        <h6 class="text-left" v-if="checkCv()"><a href="#"  v-on:click="readResume()">Open Cv </a></h6>
+       <h4 class="text-left">CV</h4>
+        <h6 class="text-left" v-if="checkCv()"><a href="#"  v-on:click="readResume()">Click to see your previously uploaded Cv</a></h6>
 
         <b-form-group id="image-group">
         <b-form-file name="resume"
@@ -53,7 +53,7 @@
             placeholder="Select a pdf file or drop it here ..."
             drop-placeholder="Släpp .pdf filen här som ..."
         />
-        <b-button class="mr-0 mt-1" size="sm" v-on:click="submitFile()">Save</b-button>
+        <b-button class="mr-0 mt-1" size="sm" v-on:click="submitFile()">Save / Update</b-button>
        </b-form-group>
         <!--<div v-show="checkResume">
             <b-button  v-on:click="readResume()"> My CV</b-button>
@@ -76,8 +76,8 @@
 
 
         <!----------   cover letter    ------------->
-        <h5 class="text-left">Upload cover letter</h5>
-       <h6 class="text-left" v-if="checkCoverletter()"><a href="#"  v-on:click="readCoverLetter()">Open Cover letter </a></h6>
+        <h4 class="text-left">Cover Letter</h4>
+       <h6 class="text-left" v-if="checkCoverletter()"><a href="#"  v-on:click="readCoverLetter()">Click to see your previously uploaded cover letter </a></h6>
 
         <b-form-file name="coverletter"
                    accept=".pdf"
@@ -88,7 +88,7 @@
                    placeholder="Select a pdf file or drop it here ..."
                    drop-placeholder="Släpp .pdf filen här som ..."
       ></b-form-file>
-        <b-button class="mr-0 mt-1" size="sm" v-on:click="submitCoverLetter()">Save</b-button>
+        <b-button class="mr-0 mt-1" size="sm" v-on:click="submitCoverLetter()">Save / Update</b-button>
          <div v-if="coverletterUploaded">
         {{ this.fileCoverLetter.name }} is uploaded
 
@@ -97,8 +97,8 @@
 
 
         <!----------   certificate    ------------->
-        <h5 class="text-left">Upload Certicate</h5>
-        <h6 class="text-left" v-if="checkCertificate()"><a href="#" v-on:click="readCertificate()">Open Certificate</a></h6>
+        <h4 class="text-left">Certificate</h4>
+        <h6 class="text-left" v-if="checkCertificate()"><a href="#" v-on:click="readCertificate()">Click to see your previously uploaded certificate</a></h6>
 
         <b-form-file name="certificate"
                    accept=".pdf"
@@ -110,7 +110,7 @@
                    drop-placeholder="Släpp .pdf filen här som ..."
       ></b-form-file>
 
-      <b-button class="mr-0 mt-1" size="sm" v-on:click="submitCertificate()">Save</b-button>
+      <b-button class="mr-0 mt-1" size="sm" v-on:click="submitCertificate()">Save / Update</b-button>
       <div v-if="betygUploaded">
         {{ this.fileBetyg.name }} is uploaded
 <!--        <b-button class="mr-0 mt-1" size="sm" v-on:click="readCertificate()">Open</b-button>-->
@@ -146,22 +146,7 @@ export default {
 
   };
   },
-   /* computed: {
-        // a computed getter
-        checkResume: function () {
-            const fs = require('fs')
-            const path = `../resumes/${this.$parent.user.userId}resume.pdf`;
-// See if the file exists
-                if(fs.existsSync(path)){
-                    return true;
-
-                }else{
-                    return false;
-                }
-            },
-
-        },*/
-      methods: {
+        methods: {
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
     },
@@ -294,7 +279,7 @@ export default {
           },
     checkCv () {
               axios.get("http://localhost:3000/api/uploads/resumes/" + this.$parent.user.userId)
-                  .then(response => (this.respoCv = response))
+                  .then(response => (this.respoCv = response.status))
 
               if(this.respoCv===null){
                   return false
@@ -303,23 +288,7 @@ export default {
 
           },
 
-
-    // fetch("api/users", {
-    //   body: JSON.stringify({
-    //     form_img: this.img.name
-    //   }),
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   method: "POST"
-    // })
-    //   .then(response => response.json())
-    //   .then(result => {
-    //     // if()
-    //   })
   }
-
-
 }
 </script>
 

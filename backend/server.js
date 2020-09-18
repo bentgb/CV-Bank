@@ -4,6 +4,7 @@ var cors = require('cors');
 var db = require("./dataDB.js");
 var multer = require("multer");
 const path = require('path');
+const fs = require('fs');
 app.use(cors());
 app.use(express.static('public'));
 var storage = multer.diskStorage({
@@ -71,16 +72,44 @@ app.get('/api/users/:id', (request, response, next) => {
 });
 
 app.get('/api/uploads/resumes/:id', (request, response, next) => {
-    var options = {'root':"resumes"};
-    response.sendFile(`${request.params.id}resume.pdf`,options);
-});
+
+
+        fs.access(`resumes/${request.params.id}resume.pdf`, function (err, data) {
+            const options = {'root': "resumes"};
+            if (err) {
+                next(err) // Pass errors to Express.
+            } else {
+                response.sendFile(`${request.params.id}resume.pdf`, options)
+            }
+        })
+
+    });
+
+
 app.get('/api/uploads/coverletters/:id', (request, response, next) => {
-    var options = {'root':"coverletters"};
-    response.sendFile(`${request.params.id}coverletter.pdf`,options);
+
+
+        fs.access(`coverletters/${request.params.id}coverletter.pdf`, function (err, data) {
+            const options = {'root': "coverletters"};
+            if (err) {
+                next(err) // Pass errors to Express.
+            } else {
+                response.sendFile(`${request.params.id}coverletter.pdf`, options)
+            }
+        })
+
 });
+
 app.get('/api/uploads/certificates/:id', (request, response, next) => {
-    var options = {'root':"certificates"};
-    response.sendFile(`${request.params.id}certificate.pdf`,options);
+
+    fs.access(`certificates/${request.params.id}certificate.pdf`,function (err, data) {
+        var options = {'root':"certificates"};
+        if (err) {
+            next(err) // Pass errors to Express.
+        } else {
+            response.sendFile(`${request.params.id}certificate.pdf`, options)
+        }
+    })
 });
 
 //<editor-fold desc="User handle">
