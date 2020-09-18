@@ -41,7 +41,9 @@
 
        <!----------   CV    ------------->
        <h5 class="text-left">Upload CV</h5>
-       <b-form-group id="image-group">
+        <h6 class="text-left" v-if="checkCv()"><a href="#"  v-on:click="readResume()">Open Cv </a></h6>
+
+        <b-form-group id="image-group">
         <b-form-file name="resume"
             accept=".pdf"
             enctype="multipart/form-data"
@@ -58,18 +60,9 @@
         </div>-->
        <div v-if="fileUploaded">
      {{ this.file.name }} is uploaded
-
-<!--                <a -->
-<!--                    href=`http://localhost:3000/api/uploads/resumes/${this.$parent.user.userId}`-->
-<!--                >Mypdf</a>-->
-        <!--
-        <iframe :src="getPDFPath()" style="width:200px; height:200px; border: none;">
-          Oops! an error has occurred.
-        </iframe>
-        -->
-        <b-button class="mr-0 mt-1" size="sm" v-on:click="showModal">Open</b-button>
+<!--        <b-button class="mr-0 mt-1" size="sm" v-on:click="showModal">Open</b-button>-->
       </div>
-        <div>
+   <!--     <div>
             <b-modal ref="my-modal" hide-footer>
                 <div class="d-block text-center">
                     <b-embed
@@ -79,11 +72,13 @@
                     ></b-embed>
                 </div>
             </b-modal>
-        </div>
+        </div>-->
 
 
         <!----------   cover letter    ------------->
         <h5 class="text-left">Upload cover letter</h5>
+       <h6 class="text-left" v-if="checkCoverletter()"><a href="#"  v-on:click="readCoverLetter()">Open Cover letter </a></h6>
+
         <b-form-file name="coverletter"
                    accept=".pdf"
                    enctype="multipart/form-data"
@@ -97,13 +92,15 @@
          <div v-if="coverletterUploaded">
         {{ this.fileCoverLetter.name }} is uploaded
 
-        <b-button class="mr-0 mt-1" size="sm" v-on:click="readCoverLetter()">Open</b-button>
+<!--        <b-button class="mr-0 mt-1" size="sm" v-on:click="readCoverLetter()">Open</b-button>-->
       </div>
 
 
         <!----------   certificate    ------------->
         <h5 class="text-left">Upload Certicate</h5>
-      <b-form-file name="certificate"
+        <h6 class="text-left" v-if="checkCertificate()"><a href="#" v-on:click="readCertificate()">Open Certificate</a></h6>
+
+        <b-form-file name="certificate"
                    accept=".pdf"
                    enctype="multipart/form-data"
                    ref="file"
@@ -112,10 +109,11 @@
                    placeholder="Select a pdf file or drop it here ..."
                    drop-placeholder="Släpp .pdf filen här som ..."
       ></b-form-file>
+
       <b-button class="mr-0 mt-1" size="sm" v-on:click="submitCertificate()">Save</b-button>
       <div v-if="betygUploaded">
         {{ this.fileBetyg.name }} is uploaded
-        <b-button class="mr-0 mt-1" size="sm" v-on:click="readCertificate()">Open</b-button>
+<!--        <b-button class="mr-0 mt-1" size="sm" v-on:click="readCertificate()">Open</b-button>-->
       </div>
     </div>
   </b-container>
@@ -137,12 +135,18 @@ export default {
       fileUploaded: false,
       betygUploaded: false,
       coverletterUploaded: false,
-        message: "test",
+      message: "test",
       form_img: "test.png",
-      img: null
-    };
+      img: null,
+      respoCertificate:null,
+      respoCoverLetter:null,
+      respoCv:null
+
+
+
+  };
   },
-    computed: {
+   /* computed: {
         // a computed getter
         checkResume: function () {
             const fs = require('fs')
@@ -156,7 +160,7 @@ export default {
                 }
             },
 
-        },
+        },*/
       methods: {
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
@@ -183,7 +187,7 @@ export default {
       const formData = new FormData();
       formData.append("coverletter", this.fileCoverLetter);
       try {
-        if (this.file != "") {
+        if (this.fileCoverLetter != "") {
           axios.post("http://127.0.0.1:3000/api/upload/coverletter/" + this.$parent.user.userId, formData);
           this.message = "uploaded";
           this.coverletterUploaded = true;
@@ -234,17 +238,17 @@ export default {
     },
 
     readResume() {
-        "http://localhost:3000/api/uploads/resumes/" + this.$parent.user.userId;
+        window.open("http://localhost:3000/api/uploads/resumes/" + this.$parent.user.userId, 'popup','width=600,height=750'); //to open in new tab
       //to open in new tab
     },
 
     readCoverLetter() {
-      window.open("http://localhost:3000/api/uploads/coverletters/" + this.$parent.user.userId, "_blank"); //to open in new tab
+      window.open("http://localhost:3000/api/uploads/coverletters/" + this.$parent.user.userId, 'popup','width=600,height=750'); //to open in new tab
     },
 
 
     readCertificate() {
-      window.open("http://localhost:3000/api/uploads/certificates/" + this.$parent.user.userId, "_blank"); //to open in new tab
+      window.open("http://localhost:3000/api/uploads/certificates/" + this.$parent.user.userId, 'popup','width=600,height=750'); //to open in new tab
     },
 
     showModal() {
@@ -254,10 +258,51 @@ export default {
     hideModal() {
               this.$refs["my-modal"].hide();
           },
-
     image() {
       this.form_img = this.img.name;
-    }
+    },
+    checkCertificate () {
+              axios.get("http://localhost:3000/api/uploads/certificates/" + this.$parent.user.userId)
+                  .then(response => (this.respoCertificate = response))
+                  .catch (function (error) {
+                  console.log(error);
+              });
+
+        if(this.respoCertificate===null){
+                   return false
+               }else { return true}
+
+        // axios.get("http://localhost:3000/api/uploads/certificates/" + this.$parent.user.userId)
+        //     .then(response => (this.respoCertificate = response.status))
+        //     .catch (function (error) {
+        //         console.log(error);
+        //     });
+        //
+        // if(this.respoCertificate===200){
+        //     return true
+        // }else { return false}
+    },
+    checkCoverletter () {
+              axios.get("http://localhost:3000/api/uploads/coverletters/" + this.$parent.user.userId)
+                  .then(response => (this.respoCoverLetter = response))
+
+              if(this.respoCoverLetter===null){
+                  return false
+              }else { return true}
+
+
+          },
+    checkCv () {
+              axios.get("http://localhost:3000/api/uploads/resumes/" + this.$parent.user.userId)
+                  .then(response => (this.respoCv = response))
+
+              if(this.respoCv===null){
+                  return false
+              }else { return true}
+
+
+          },
+
 
     // fetch("api/users", {
     //   body: JSON.stringify({
