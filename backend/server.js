@@ -19,7 +19,7 @@ var storage = multer.diskStorage({
             cb(null, './certificates/');
         }
 
-        else { // else uploading image
+        else if (file.fieldname === "image"){ // else uploading image
             cb(null, './images/');
         }
     },
@@ -95,6 +95,20 @@ app.get('/api/uploads/coverletters/:id', (request, response, next) => {
                 next(err) // Pass errors to Express.
             } else {
                 response.sendFile(`${request.params.id}coverletter.pdf`, options)
+            }
+        })
+
+});
+
+app.get('/api/uploads/images/:id', (request, response, next) => {
+
+
+        fs.access(`images/${request.params.id}image.jpg`, function (err, data) {
+            const options = {'root': "images"};
+            if (err) {
+                next(err) // Pass errors to Express.
+            } else {
+                response.sendFile(`${request.params.id}image.jpg`, options)
             }
         })
 
@@ -183,6 +197,33 @@ app.post("/api/upload/coverletter/:id", upload.single("coverletter"), (req, res)
     }
 })
 app.post("/api/upload/certificate/:id", upload.single("certificate"), (req, res) =>{
+    if (!req.file) {
+        console.log("No file received");
+        alert("Error! in file upload.");
+    } else {
+        console.log('file received');
+        res.json({
+            "message": "success",
+            "filePath": req.file,
+            "id": req.params.id
+        })
+
+/*        var sql = 'UPDATE USERS SET CVpath= ? WHERE userId = ?'
+        var params =[req.file.path,req.params.id]
+        db.run(sql, params, function (err, result) {
+            if (err){
+                res.status(400).json({"error": err.message})
+                return;
+            }
+            res.json({
+                "message": "success",
+                "filePath": req.file,
+                "id": req.params.id
+            })
+        });*/
+    }
+})
+app.post("/api/upload/image/:id", upload.single("image"), (req, res) =>{
     if (!req.file) {
         console.log("No file received");
         alert("Error! in file upload.");
