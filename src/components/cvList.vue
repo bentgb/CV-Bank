@@ -6,21 +6,28 @@
 
             <div class="mt-5">
             <div class="row" >
-                <b-card-title>Edwin</b-card-title>
-                <b-button class="mr-0 mt-3 " >Öppna</b-button>
+              <ul>
+                <li v-for="user in users" :key="user.userId">
+                  <b-card-title>{{ user.user }} </b-card-title>
+                <b-button class="mr-0 mt-3 " >Öppna</b-button></li>
+              </ul>
+
+
             </div>
-            <div class="row">
-                    <b-card-title>Aisha</b-card-title>
-                    <b-button class="mr-0 mt-3 " >Öppna</b-button>
-            </div>
-            <div class="row">
-                    <b-card-title>Husam</b-card-title>
-                    <b-button class="mr-0 mt-3 " >Öppna</b-button>
-            </div>
-            <div class="row">
-                    <b-card-title>Tugba</b-card-title>
-                    <b-button class="mr-0 mt-3 " >Öppna</b-button>
-                </div>
+
+
+<!--            <div class="row">-->
+<!--                    <b-card-title>Aisha</b-card-title>-->
+<!--                    <b-button class="mr-0 mt-3 " >Öppna</b-button>-->
+<!--            </div>-->
+<!--            <div class="row">-->
+<!--                    <b-card-title>Husam</b-card-title>-->
+<!--                    <b-button class="mr-0 mt-3 " >Öppna</b-button>-->
+<!--            </div>-->
+<!--            <div class="row">-->
+<!--                    <b-card-title>Tugba</b-card-title>-->
+<!--                    <b-button class="mr-0 mt-3 " >Öppna</b-button>-->
+<!--                </div>-->
 
 
             <div class="mt-5" >
@@ -40,8 +47,29 @@
 
 <script>
     export default {
-        name: "CV-list"
+        name: "CV-list",
+      data() {
+        return {
+          users: []
+        }
+
+      },
+
+      mounted(){
+        fetch('http://127.0.0.1:3000/api/users/')
+            .then((response) => {
+              return response.json();
+            })
+            .then((data) => {
+              console.log(data.users);
+              this.users = data.users;
+            });
+      }
     }
+
+
+
+
 </script>
 
 <style scoped>

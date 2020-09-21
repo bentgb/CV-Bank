@@ -3,15 +3,17 @@
     <div class="section content-title-group">
       <h2 class="title">STUDENT</h2>
     </div>
-    <b-form method="submit">
-      <b-form-file v-model="img" class="mt-3" plain></b-form-file>
-      <p type="submit" @click="image">Change</p>
+    <b-form >
+      <b-form-file name="image" v-model="img" class="mt-3" plain  v-on:change="handleFileUpload()"></b-form-file>
+      <b-button class="mr-0 mt-1" size="sm" v-on:click="submitImage()">Save / Update</b-button>
+<!--      <p type="submit" @click="submitImage()">Change</p>-->
     </b-form>
 
     <div class="mt-4">
       <b-card
-          :img-src="require('../assets/' + form_img)"
-          :img-alt="'No image selected'"
+          :img-src="imgUrl"
+
+          :img-alt="'no such file'"
           img-left
           class="mb-3"
       >
@@ -140,7 +142,10 @@ export default {
       img: null,
       respoCertificate:null,
       respoCoverLetter:null,
-      respoCv:null
+      respoCv:null,
+      imgUrl:"http://127.0.0.1:3000/api/uploads/images/"+this.$parent.user.userId
+
+          // "http://127.0.0.1:3000/api/uploads/images/" + this.$parent.user.userId+"image.jpg"
 
 
 
@@ -204,6 +209,24 @@ export default {
       }
     },
 
+
+          async submitImage() {
+            const formData = new FormData();
+            formData.append("image", this.img);
+            try {
+              if (this.file != "") {
+                axios.post("http://127.0.0.1:3000/api/upload/image/" + this.$parent.user.userId, formData);
+                this.message = "uploaded";
+                this.fileUploaded = true;
+              } else {
+                alert("Choose a File ");
+
+              }
+            } catch (e) {
+              this.message = "Sth went wrong";
+            }
+          },
+
     async saveDescription() {
       const requestOptions = {
         method: "PUT",
@@ -247,7 +270,7 @@ export default {
       this.form_img = this.img.name;
     },
     checkCertificate () {
-              axios.get("http://localhost:3000/api/uploads/certificates/" + this.$parent.user.userId)
+      /*        axios.get("http://localhost:3000/api/uploads/certificates/" + this.$parent.user.userId)
                   .then(response => (this.respoCertificate = response))
                   .catch (function (error) {
                   console.log(error);
@@ -255,7 +278,7 @@ export default {
 
         if(this.respoCertificate===null){
                    return false
-               }else { return true}
+               }else { return true}*/
 
         // axios.get("http://localhost:3000/api/uploads/certificates/" + this.$parent.user.userId)
         //     .then(response => (this.respoCertificate = response.status))
@@ -268,24 +291,24 @@ export default {
         // }else { return false}
     },
     checkCoverletter () {
-              axios.get("http://localhost:3000/api/uploads/coverletters/" + this.$parent.user.userId)
+         /*     axios.get("http://localhost:3000/api/uploads/coverletters/" + this.$parent.user.userId)
                   .then(response => (this.respoCoverLetter = response))
 
               if(this.respoCoverLetter===null){
                   return false
               }else { return true}
-
+*/
 
           },
     checkCv () {
-              axios.get("http://localhost:3000/api/uploads/resumes/" + this.$parent.user.userId)
+             /* axios.get("http://localhost:3000/api/uploads/resumes/" + this.$parent.user.userId)
                   .then(response => (this.respoCv = response.status))
 
               if(this.respoCv===null){
                   return false
               }else { return true}
 
-
+*/
           },
 
   }
