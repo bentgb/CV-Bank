@@ -13,22 +13,22 @@ const routes = [
   },
 
   {
-    path: "/mypage",
+    path: "/mypage:id",
     name: "mypage",
     component: () =>
-        import( "../views/mypage.vue")
+      import("../views/mypage.vue")
   },
   {
     path: "/admin",
     name: "admin",
     component: () =>
-        import( "../components/admin.vue")
+      import("../components/admin.vue")
   },
   {
     path: "/cvList",
     name: "cvList",
     component: () =>
-        import( "../components/cvList.vue")
+      import("../components/cvList.vue")
   },
 ];
 

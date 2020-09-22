@@ -1,46 +1,15 @@
 <template>
   <b-container>
     <div class="section content-title-group">
-      <h2 class="title mt-5 mb-5">Javautvecklare CVs</h2>
+      <h2 class="title mt-5 mb-5">Studenter Javautvecklare</h2>
     </div>
 
     <div class="mt-5">
-      <div class="row">
-        <b-card-title>Edwin</b-card-title>
-        <router-link :to="`mypage`">
-          <b-button class="mr-0 mt-3">Öppna</b-button>
+      <div class="row mb-3" v-for="user in users" :key="user.name">
+        <h5 class="mt-2">{{users.user}}</h5>
+        <router-link :to="`mypage${users.userId}`">
+          <b-button>Gå till</b-button>
         </router-link>
-      </div>
-      <div class="row">
-        <b-card-title>Aisha</b-card-title>
-        <router-link to="mypage">
-          <b-button class="mr-0 mt-3">Öppna</b-button>
-        </router-link>
-      </div>
-      <div class="row">
-        <b-card-title>Husam</b-card-title>
-        <router-link to="mypage">
-          <b-button class="mr-0 mt-3">Öppna</b-button>
-        </router-link>
-      </div>
-      <div class="row">
-        <router-link to="mypage">
-          <b-button class="mr-0 mt-3">Öppna</b-button>
-        </router-link>
-      </div>
-
-      <div class="mt-5">
-        <a
-          class
-          href="http://www.linkedin.com/shareArticle?mini=true&amp;url=url&amp;title=title&amp;source=url/"
-        >
-          <i class="fa fa-linkedin">Share on linkedin</i>
-        </a>
-      </div>
-      <div>
-        <a href="https://twitter.com/share" class data-url="http://example.com">
-          <i class="fa fa-twitter">Share on Twitter</i>
-        </a>
       </div>
     </div>
   </b-container>
@@ -48,7 +17,12 @@
 
 <script>
 export default {
-  name: "CV-list"
+  name: "CV-list",
+  data() {
+    return {
+      users: this.$parent.user
+    };
+  }
 };
 </script>
 

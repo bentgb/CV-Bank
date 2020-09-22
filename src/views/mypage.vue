@@ -72,83 +72,48 @@
     <div>
       <b-modal ref="my-modal" hide-footer>
         <div class="d-block text-center">
-          <b-embed type="iframe" aspect="16by9" src="http://localhost:3000/api/uploads/resumes/10"></b-embed>
+          <b-embed
+            type="iframe"
+            aspect="16by9"
+            :src="`http://localhost:3000/api/uploads/resumes/${this.$parent.user.userId }`"
+          ></b-embed>
         </div>
       </b-modal>
     </div>
-
-    <div>
-      <b-modal ref="my-modal" hide-footer>
-        <div class="d-block text-center">
-          <b-embed type="iframe" aspect="16by9" :src="`${ readResume() }`"></b-embed>
-        </div>
-      </b-modal>
-    </div>
+    <!----------   cover letter    ------------->
     <h5 class="text-left">Upload cover letter</h5>
     <b-form-file
       name="coverletter"
       accept=".pdf"
       enctype="multipart/form-data"
       ref="file"
-      v-model="file"
+      v-model="fileCoverLetter"
       v-on:change="handleFileUpload()"
       placeholder="Select a pdf file or drop it here ..."
       drop-placeholder="Släpp .pdf filen här som ..."
     ></b-form-file>
     <b-button class="mr-0 mt-1" size="sm" v-on:click="submitCoverLetter()">Save</b-button>
-    <div v-if="fileUploaded">
-      {{ this.file.name }} is uploaded
+    <div v-if="coverletterUploaded">
+      {{ this.fileCoverLetter.name }} is uploaded
       <b-button class="mr-0 mt-1" size="sm" v-on:click="readCoverLetter()">Open</b-button>
     </div>
+
+    <!----------   certificate    ------------->
     <h5 class="text-left">Upload Certicate</h5>
     <b-form-file
       name="certificate"
       accept=".pdf"
       enctype="multipart/form-data"
       ref="file"
-      v-model="file"
+      v-model="fileBetyg"
       v-on:change="handleFileUpload()"
       placeholder="Select a pdf file or drop it here ..."
       drop-placeholder="Släpp .pdf filen här som ..."
     ></b-form-file>
     <b-button class="mr-0 mt-1" size="sm" v-on:click="submitCertificate()">Save</b-button>
-    <div v-if="fileUploaded">
-      {{ this.file.name }} is uploaded
-      <!----------   cover letter    ------------->
-      <h5 class="text-left">Upload cover letter</h5>
-      <b-form-file
-        name="coverletter"
-        accept=".pdf"
-        enctype="multipart/form-data"
-        ref="file"
-        v-model="fileCoverLetter"
-        v-on:change="handleFileUpload()"
-        placeholder="Select a pdf file or drop it here ..."
-        drop-placeholder="Släpp .pdf filen här som ..."
-      ></b-form-file>
-      <b-button class="mr-0 mt-1" size="sm" v-on:click="submitCoverLetter()">Save</b-button>
-      <div v-if="coverletterUploaded">
-        {{ this.fileCoverLetter.name }} is uploaded
-        <b-button class="mr-0 mt-1" size="sm" v-on:click="readCoverLetter()">Open</b-button>
-      </div>
-
-      <!----------   certificate    ------------->
-      <h5 class="text-left">Upload Certicate</h5>
-      <b-form-file
-        name="certificate"
-        accept=".pdf"
-        enctype="multipart/form-data"
-        ref="file"
-        v-model="fileBetyg"
-        v-on:change="handleFileUpload()"
-        placeholder="Select a pdf file or drop it here ..."
-        drop-placeholder="Släpp .pdf filen här som ..."
-      ></b-form-file>
-      <b-button class="mr-0 mt-1" size="sm" v-on:click="submitCertificate()">Save</b-button>
-      <div v-if="betygUploaded">
-        {{ this.fileBetyg.name }} is uploaded
-        <b-button class="mr-0 mt-1" size="sm" v-on:click="readCertificate()">Open</b-button>
-      </div>
+    <div v-if="betygUploaded">
+      {{ this.fileBetyg.name }} is uploaded
+      <b-button class="mr-0 mt-1" size="sm" v-on:click="readCertificate()">Open</b-button>
     </div>
   </b-container>
 </template>
@@ -171,38 +136,11 @@ export default {
       img: null
     };
   },
-  methods: {
-    handleFileUpload() {
-      this.file = this.$refs.file.files[0];
-    },
-
-    checkResume() {
-      var myResume = new File(
-        `../resumes/${this.$parent.user.userId}resume.pdf`
-      );
-
-      // See if the file exists
-      if (myResume.exists()) {
-        this.resumeExists = true;
-      } else {
-        console.log("The file does not exist");
-      }
-    },
-
-    fileCoverLetter: null,
-    fileBetyg: null,
-    fileUploaded: false,
-    betygUploaded: false,
-    coverletterUploaded: false,
-    message: "test",
-    form_img: "test.png",
-    img: null
-  },
   computed: {
     // a computed getter
     checkResume: function() {
       const fs = require("fs");
-      const path = `../resumes/${this.$parent.user.userId}resume.pdf`;
+      const path = `../resumes/${this.$parent.user.userId}`;
       // See if the file exists
       if (fs.existsSync(path)) {
         return true;
@@ -296,10 +234,10 @@ export default {
       }
     },
 
-    readResume() {
-      "http://localhost:3000/api/uploads/resumes/" + this.$parent.user.userId;
-      //to open in new tab
-    },
+    // readResume() {
+    //   "http://localhost:3000/api/uploads/resumes/" + this.$parent.user.userId;
+    //   //to open in new tab
+    // },
 
     readCoverLetter() {
       window.open(
@@ -344,4 +282,3 @@ export default {
   }
 };
 </script>
-
