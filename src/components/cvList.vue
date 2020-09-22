@@ -5,11 +5,40 @@
     </div>
 
     <div class="mt-5">
-      <div class="row mb-3" v-for="user in users" :key="user.name">
-        <h5 class="mt-2">{{users.user}}</h5>
-        <router-link :to="`mypage${users.userId}`">
-          <b-button>Gå till</b-button>
-        </router-link>
+      <div class="row">
+        <ul>
+          <li v-for="user in users" :key="user.userId">
+            <b-card-title>{{ user.user }}</b-card-title>
+            <b-button class="mr-0 mt-3">Öppna</b-button>
+          </li>
+        </ul>
+      </div>
+
+      <!--            <div class="row">-->
+      <!--                    <b-card-title>Aisha</b-card-title>-->
+      <!--                    <b-button class="mr-0 mt-3 " >Öppna</b-button>-->
+      <!--            </div>-->
+      <!--            <div class="row">-->
+      <!--                    <b-card-title>Husam</b-card-title>-->
+      <!--                    <b-button class="mr-0 mt-3 " >Öppna</b-button>-->
+      <!--            </div>-->
+      <!--            <div class="row">-->
+      <!--                    <b-card-title>Tugba</b-card-title>-->
+      <!--                    <b-button class="mr-0 mt-3 " >Öppna</b-button>-->
+      <!--                </div>-->
+
+      <div class="mt-5">
+        <a
+          class
+          href="http://www.linkedin.com/shareArticle?mini=true&amp;url=url&amp;title=title&amp;source=url/"
+        >
+          <i class="fa fa-linkedin">Share on linkedin</i>
+        </a>
+      </div>
+      <div>
+        <a href="https://twitter.com/share" class data-url="http://example.com">
+          <i class="fa fa-twitter">Share on Twitter</i>
+        </a>
       </div>
     </div>
   </b-container>
@@ -20,8 +49,19 @@ export default {
   name: "CV-list",
   data() {
     return {
-      users: this.$parent.user
+      users: []
     };
+  },
+
+  mounted() {
+    fetch("http://127.0.0.1:3000/api/users/")
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        console.log(data.users);
+        this.users = data.users;
+      });
   }
 };
 </script>
