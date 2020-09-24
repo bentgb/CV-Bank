@@ -6,11 +6,9 @@
 
             <div class="mt-5">
             <div class="row" >
-              <ul>
-                <li v-for="user in users" :key="user.userId">
-                  <b-card-title>{{ user.user }} </b-card-title>
-                <b-button class="mr-0 mt-3 " >Öppna</b-button></li>
-              </ul>
+              <b-list-group>
+                <b-list-group-item v-for="user in users" :key="user.userId"  :href="`http://localhost:3000/api/uploads/resumes/${user.userId}`">{{ user.user }} : {{user.description}}</b-list-group-item>
+              </b-list-group>
 
 
             </div>
@@ -50,7 +48,12 @@
         name: "CV-list",
       data() {
         return {
-          users: []
+          users: [],
+
+
+
+
+
         }
 
       },
@@ -64,8 +67,16 @@
               console.log(data.users);
               this.users = data.users;
             });
-      }
-    }
+      },
+
+        methods: {
+
+
+            }
+
+        }
+
+
 
 
 
