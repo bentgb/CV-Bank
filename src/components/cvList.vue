@@ -6,8 +6,18 @@
 
             <div class="mt-5">
             <div class="row" >
-              <b-list-group>
-                <b-list-group-item v-for="user in users" :key="user.userId"  :href="`http://localhost:3000/api/uploads/resumes/${user.userId}`">{{ user.user }} : {{user.description}}</b-list-group-item>
+              <b-list-group style="max-width: 1100px;" display="center">
+                <b-list-group-item
+                        class="d-flex align-items-center"
+                        v-for="user in users" :key="user.userId">
+                        <b-avatar variant="info"  :src="`http://localhost:3000/api/uploads/images/${user.userId}`" class="mr-3"></b-avatar>
+                        <span class="mr-auto"> {{ user.user }} : {{user.description}}</span>
+
+                        <b-link :href="`http://localhost:3000/api/uploads/resumes/${user.userId}`" target="popup">Resume </b-link>
+                        <b-link :href="`http://localhost:3000/api/uploads/certificates/${user.userId}`" target="popup">Certicate   </b-link>
+                        <b-link :href="`http://localhost:3000/api/uploads/coverletters/${user.userId}`" target="popup">Cover letter </b-link>
+
+                </b-list-group-item>
               </b-list-group>
 
 
@@ -70,6 +80,7 @@
       },
 
         methods: {
+
 
 
             }
