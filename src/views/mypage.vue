@@ -6,14 +6,14 @@
     <b-form>
       <b-form-file name="image" v-model="img" class="mt-3" plain v-on:change="handleFileUpload()"></b-form-file>
       <b-button class="mr-0 mt-1" size="sm" v-on:click="submitImage()">Save / Update</b-button>
-      <!--      <p type="submit" @click="submitImage()">Change</p>-->
     </b-form>
 
+    <!----------   user info    ------------->
     <div class="mt-4">
-      <b-card :img-src="imgUrl" :img-alt="'no such file'" img-left class="mb-3">
-        <!----------   user info    ------------->
-        <b-card-title class="text-center mr-5">{{ this.$parent.user.user }}</b-card-title>
-        <b-card-sub-title class="text-left ml-2 mb-2">Ålder</b-card-sub-title>
+      <b-card>
+        <b-card-title class="text-center ml-5 mb-0">{{ this.$parent.user.user }}</b-card-title>
+        <b-card-img id="img" :src="imgUrl" alt="alt image" class="mb-3 mr-3 float-left"></b-card-img>
+        <b-card-sub-title class="text-left mt-1 ml-2 mb-2">Ålder</b-card-sub-title>
         <b-card-text class="text-left ml-4 mb-2">{{ this.$parent.user.age }}</b-card-text>
         <b-card-sub-title class="text-left ml-2 mb-2">Klass</b-card-sub-title>
         <b-card-text class="text-left ml-4 mb-2">{{ this.$parent.user.class }}</b-card-text>
@@ -138,15 +138,12 @@ export default {
       betygUploaded: false,
       coverletterUploaded: false,
       message: "test",
-      form_img: "test.png",
       img: null,
       respoCertificate: null,
       respoCoverLetter: null,
       respoCv: null,
       imgUrl:
         "http://127.0.0.1:3000/api/uploads/images/" + this.$parent.user.userId
-
-      // "http://127.0.0.1:3000/api/uploads/images/" + this.$parent.user.userId+"image.jpg"
     };
   },
   methods: {
@@ -287,9 +284,6 @@ export default {
     hideModal() {
       this.$refs["my-modal"].hide();
     },
-    image() {
-      this.form_img = this.img.name;
-    },
     checkCertificate() {
       /*        axios.get("http://localhost:3000/api/uploads/certificates/" + this.$parent.user.userId)
                   .then(response => (this.respoCertificate = response))
@@ -332,4 +326,11 @@ export default {
   }
 };
 </script>
+
+<style>
+#img {
+  width: 200px;
+  height: 200px;
+}
+</style>
 
