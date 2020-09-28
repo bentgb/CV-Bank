@@ -6,11 +6,10 @@
 
             <div class="mt-5">
             <div class="row" >
-              <b-list-group style="max-width: 1100px;" display="center">
+              <b-list-group style="max-width: 1100px;" display="center" v-if="user.class.toLowerCase()==='java'">
                 <b-list-group-item
                         class="d-flex align-items-center"
                         v-for="user in users" :key="user.userId" >
-                  <div v-if="user.class.toLowerCase()==='java'">
 
                     <b-avatar variant="info"  :src="`http://localhost:3000/api/uploads/images/${user.userId}`" class="mr-3"></b-avatar>
                     <span class="mr-auto"> {{ user.user }} : {{user.description}}</span>
@@ -20,7 +19,7 @@
                     <b-link :href="`http://localhost:3000/api/uploads/coverletters/${user.userId}`" target="popup">Cover letter </b-link>
 
 
-                  </div>
+
 
                 </b-list-group-item>
               </b-list-group>

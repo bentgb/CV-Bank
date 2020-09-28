@@ -13,7 +13,7 @@
       <b-card
           :img-src="imgUrl"
 
-          :img-alt="'no such file'"
+          :img-alt="'Please upload your profile image'"
           img-left
           class="mb-3"
       >
