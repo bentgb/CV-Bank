@@ -8,16 +8,16 @@
 
 
             <div class="row-cols-2">
-                <router-link to="/cvList">
+                <router-link to="/javaList">
                 <b-button class="mr-0 mt-1 custom" variant="outline-secondary" size="lg">Javautvecklare</b-button>
                 </router-link>
-                <router-link to="#">
-                <b-button class="mr-0 mt-1 custom" variant="outline-secondary" size="lg">Webbutvecklare</b-button>
+                <router-link to="/testerList">
+                <b-button class="mr-0 mt-1 custom" variant="outline-secondary" size="lg">Testare</b-button>
                 </router-link>
             </div>
 
             <div class="row-cols-2">
-                <router-link to="#">
+                <router-link to="/webList">
                     <b-button class="mr-0 mt-1 custom" variant="outline-secondary" size="lg">Applikationsutvecklare</b-button>
                 </router-link>
                 <router-link to="#">
