@@ -1,12 +1,12 @@
 <template>
     <b-container>
         <div class="section content-title-group">
-            <h2 class="title mt-5 mb-5"> Javautvecklare CVs</h2>
+            <h2 class="title mt-5 mb-5"> Javautvecklare </h2>
         </div>
 
             <div class="mt-5">
             <div class="row" >
-              <b-list-group style="max-width: 1100px;" display="center" v-if="user.class.toLowerCase()==='java'">
+              <b-list-group style="max-width: 1100px;" display="center">
                 <b-list-group-item
                         class="d-flex align-items-center"
                         v-for="user in users" :key="user.userId" >
@@ -18,29 +18,9 @@
                     <b-link :href="`http://localhost:3000/api/uploads/certificates/${user.userId}`" target="popup">Certicate   </b-link>
                     <b-link :href="`http://localhost:3000/api/uploads/coverletters/${user.userId}`" target="popup">Cover letter </b-link>
 
-
-
-
                 </b-list-group-item>
               </b-list-group>
-
-
             </div>
-
-
-<!--            <div class="row">-->
-<!--                    <b-card-title>Aisha</b-card-title>-->
-<!--                    <b-button class="mr-0 mt-3 " >Öppna</b-button>-->
-<!--            </div>-->
-<!--            <div class="row">-->
-<!--                    <b-card-title>Husam</b-card-title>-->
-<!--                    <b-button class="mr-0 mt-3 " >Öppna</b-button>-->
-<!--            </div>-->
-<!--            <div class="row">-->
-<!--                    <b-card-title>Tugba</b-card-title>-->
-<!--                    <b-button class="mr-0 mt-3 " >Öppna</b-button>-->
-<!--                </div>-->
-
 
             <div class="mt-5" >
                 <a class="" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=url&amp;title=title&amp;source=url/">
@@ -59,15 +39,11 @@
 
 <script>
     export default {
-        name: "CV-list",
+        name: "javaList",
       data() {
         return {
           users: [],
-
-
-
-
-
+          javaClass: "Java",
         }
 
       },
@@ -75,12 +51,13 @@
       mounted(){
         fetch('http://127.0.0.1:3000/api/users/')
             .then((response) => {
-              return response.json();
-            })
+              return response.json();})
             .then((data) => {
-              console.log(data.users);
-              this.users = data.users;
-            });
+                    this.users = data.users.filter(users =>
+                    users.class.includes(this.javaClass))
+        });
+
+
       },
 
         methods: {

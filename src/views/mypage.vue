@@ -13,7 +13,7 @@
       <b-card
           :img-src="imgUrl"
 
-          :img-alt="'Please upload your profile image'"
+          :img-alt="'Please upload your profile photo'"
           img-left
           class="mb-3"
       >
