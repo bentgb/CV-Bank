@@ -3,62 +3,54 @@
     <div class="section content-title-group">
       <h2 class="title mt-5 mb-5">Administration</h2>
     </div>
+    <div class="mt-5">
+      <div class="row-cols-2">
+        <router-link to="/javaList">
+          <b-button class="mr-0 mt-1 custom" variant="outline-secondary" size="lg">Javautvecklare</b-button>
+        </router-link>
+        <router-link to="/testerList">
+          <b-button class="mr-0 mt-1 custom" variant="outline-secondary" size="lg">Testare</b-button>
+        </router-link>
+      </div>
 
-    <b-container>
-      <b-row>
-        <b-col>
-          <router-link to="/cvList">
-            <b-button>Javautvecklare</b-button>
-          </router-link>
-        </b-col>
-        <b-col>
-          <router-link to="#">
-            <b-button>Webbutvecklare</b-button>
-          </router-link>
-        </b-col>
-      </b-row>
+      <div class="row-cols-2">
+        <router-link to="/webList">
+          <b-button
+            class="mr-0 mt-1 custom"
+            variant="outline-secondary"
+            size="lg"
+          >Applikationsutvecklare</b-button>
+        </router-link>
+        <router-link to="#">
+          <b-button class="mr-0 mt-1 custom" variant="outline-secondary" size="lg">IT-projektledare</b-button>
+        </router-link>
+      </div>
 
-      <b-row>
-        <b-col>
-          <router-link to="#">
-            <b-button>Applikationsutvecklare</b-button>
-          </router-link>
-        </b-col>
-        <b-col>
-          <router-link to="#">
-            <b-button>IT-projektledare</b-button>
-          </router-link>
-        </b-col>
-      </b-row>
-
-      <b-row>
-        <b-col>
-          <router-link to="#">
-            <b-button size="lg">.NET-utvecklare</b-button>
-          </router-link>
-        </b-col>
-        <b-col>
-          <router-link to="#">
-            <b-button>Frontendutvecklare</b-button>
-          </router-link>
-        </b-col>
-      </b-row>
-
-      <b-row>
-        <b-col>
-          <router-link to="#">
-            <b-button>Mjukvarutestare</b-button>
-          </router-link>
-        </b-col>
-
-        <b-col>
-          <router-link to="#">
-            <b-button>JavaScript-utvecklare</b-button>
-          </router-link>
-        </b-col>
-      </b-row>
-    </b-container>
-
+      <div class="row-cols-2">
+        <router-link to="#">
+          <b-button class="mr-0 mt-1 custom" variant="outline-secondary" size="lg">.NET-utvecklare</b-button>
+        </router-link>
+        <router-link to="#">
+          <b-button
+            class="mr-0 mt-1 custom"
+            variant="outline-secondary"
+            size="lg"
+          >Frontendutvecklare</b-button>
+        </router-link>
+      </div>
+      <div class="row-cols-2">
+        <router-link to="#">
+          <b-button class="mr-0 mt-1 custom" variant="outline-secondary" size="lg">Mjukvarutestare</b-button>
+        </router-link>
+        <router-link to="#">
+          <b-button
+            class="mr-0 mt-1 custom"
+            variant="outline-secondary"
+            size="lg"
+          >JavaScript-utvecklare</b-button>
+        </router-link>
+      </div>
+    </div>
     <div class="mt-5">
       <a
         href="http://www.linkedin.com/shareArticle?mini=true&amp;url=url&amp;title=title&amp;source=url/"

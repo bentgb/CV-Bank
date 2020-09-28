@@ -25,10 +25,23 @@ const routes = [
       import("../components/admin.vue")
   },
   {
-    path: "/cvList",
-    name: "cvList",
+    path: "/javaList",
+    name: "javaList",
     component: () =>
-      import("../components/cvList.vue")
+      import("../components/javaList.vue")
+  },
+
+  {
+    path: "/testerList",
+    name: "testerList",
+    component: () =>
+      import("../components/testerList.vue")
+  },
+  {
+    path: "/webList",
+    name: "webList",
+    component: () =>
+      import("../components/webList.vue")
   },
 ];
 

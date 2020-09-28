@@ -314,14 +314,18 @@ export default {
 */
     },
     checkCv() {
-      /* axios.get("http://localhost:3000/api/uploads/resumes/" + this.$parent.user.userId)
-                  .then(response => (this.respoCv = response.status))
+      axios
+        .get(
+          "http://localhost:3000/api/uploads/resumes/" +
+            this.$parent.user.userId
+        )
+        .then(response => (this.respoCv = response.status));
 
-              if(this.respoCv===null){
-                  return false
-              }else { return true}
-
-*/
+      if (this.respoCv === null) {
+        return false;
+      } else {
+        return true;
+      }
     }
   }
 };
