@@ -12,8 +12,8 @@
     <div class="mt-4">
       <b-card
           :img-src="imgUrl"
+          @error="imgUrlAlt"
 
-          :img-alt="'Please upload your profile photo'"
           img-left
           class="mb-3"
       >
@@ -26,8 +26,8 @@
         <b-card-text class="text-left ml-4 mb-2">{{ this.$parent.user.class }}</b-card-text>
         <b-card-sub-title class="text-left ml-2 mb-2">E-post</b-card-sub-title>
         <b-card-text class="text-left ml-4 mb-2">{{ this.$parent.user.userEMAIL }}</b-card-text>
-        <b-card-sub-title class="text-left">ID</b-card-sub-title>
-        <b-card-text class="text-left">{{ this.$parent.user.userId }}</b-card-text> </b-card>
+        <b-card-sub-title class="text-left ml- mb-2">ID</b-card-sub-title>
+        <b-card-text class="text-left ml-4 mb-2">{{ this.$parent.user.userId }}</b-card-text> </b-card>
 
         <!----------   Description    ------------->
         <b-form-group class="text-left" label="Description" label-for="textarea-lazy">
@@ -143,7 +143,7 @@ export default {
       respoCertificate:null,
       respoCoverLetter:null,
       respoCv:null,
-      imgUrl:"http://127.0.0.1:3000/api/uploads/images/"+this.$parent.user.userId
+      imgUrl:"http://127.0.0.1:3000/api/uploads/images/"+this.$parent.user.userId,
 
           // "http://127.0.0.1:3000/api/uploads/images/" + this.$parent.user.userId+"image.jpg"
 
@@ -152,6 +152,10 @@ export default {
   };
   },
         methods: {
+
+    imgUrlAlt(event) {
+                event.target.src = "require('../assets/test.jpg')"
+            },
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
     },
