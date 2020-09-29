@@ -18,6 +18,8 @@
                     <b-link :href="`http://localhost:3000/api/uploads/certificates/${user.userId}`" target="popup">Certicate   </b-link>
                     <b-link :href="`http://localhost:3000/api/uploads/coverletters/${user.userId}`" target="popup">Cover letter </b-link>
 
+                    <span class="ml-5"> {{ user.userRole }} </span>
+
                 </b-list-group-item>
               </b-list-group>
             </div>
