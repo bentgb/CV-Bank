@@ -13,35 +13,35 @@ const routes = [
   },
 
   {
-    path: "/mypage",
+    path: "/mypage:id",
     name: "mypage",
     component: () =>
-        import( "../views/mypage.vue")
+      import("../views/mypage.vue")
   },
   {
     path: "/admin",
     name: "admin",
     component: () =>
-        import( "../components/admin.vue")
+      import("../components/admin.vue")
   },
   {
     path: "/javaList",
     name: "javaList",
     component: () =>
-        import( "../components/javaList.vue")
+      import("../components/javaList.vue")
   },
 
   {
     path: "/testerList",
     name: "testerList",
     component: () =>
-        import( "../components/testerList.vue")
+      import("../components/testerList.vue")
   },
   {
     path: "/webList",
     name: "webList",
     component: () =>
-        import( "../components/webList.vue")
+      import("../components/webList.vue")
   },
 ];
 
