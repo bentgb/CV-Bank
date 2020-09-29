@@ -3,11 +3,6 @@
     <div class="section content-title-group">
       <h2 class="title">STUDENT</h2>
     </div>
-    <b-form >
-      <b-form-file name="image" v-model="img" class="mt-3" plain  v-on:change="handleFileUpload()"></b-form-file>
-      <b-button class="mr-0 mt-1" size="sm" v-on:click="submitImage()">Save / Update</b-button>
-<!--      <p type="submit" @click="submitImage()">Change</p>-->
-    </b-form>
 
     <div class="mt-4">
       <b-card
@@ -28,6 +23,11 @@
         <b-card-text class="text-left ml-4 mb-2">{{ this.$parent.user.userEMAIL }}</b-card-text>
         <b-card-sub-title class="text-left ml- mb-2">ID</b-card-sub-title>
         <b-card-text class="text-left ml-4 mb-2">{{ this.$parent.user.userId }}</b-card-text> </b-card>
+        <b-form >
+            <b-form-file name="image" v-model="img" class="mt-3" plain  v-on:change="handleFileUpload()"></b-form-file>
+            <b-button class="mr-0 mt-1" size="sm" v-on:click="submitImage()">Save / Update</b-button>
+            <!--      <p type="submit" @click="submitImage()">Change</p>-->
+        </b-form>
 
         <!----------   Description    ------------->
         <b-form-group class="text-left" label="Description" label-for="textarea-lazy">
