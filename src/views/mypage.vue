@@ -1,7 +1,7 @@
 <template xmlns:http="http://www.w3.org/1999/xhtml">
   <b-container>
     <div class="section content-title-group">
-      <h2 class="title">STUDENT</h2>
+<!--      <h2 class="title">STUDENT</h2>-->
     </div>
 
     <!----------   user info    ------------->
@@ -19,15 +19,18 @@
         <b-card-text class="text-left ml-4 mb-2">{{ this.$parent.user.class }}</b-card-text>
         <b-card-sub-title class="text-left ml-2 mb-2">E-post</b-card-sub-title>
         <b-card-text class="text-left ml-4 mb-2">{{ this.$parent.user.userEMAIL }}</b-card-text>
-        <b-card-sub-title class="text-left ml-2 mb-2">ID</b-card-sub-title>
-        <b-card-text class="text-left ml-4 mb-2">{{ this.$parent.user.userId }}</b-card-text>
-      </b-card>
-      <b-form>
-        <b-form-file name="image" v-model="img" class="mt-3" plain v-on:change="handleFileUpload()"></b-form-file>
-        <b-button class="mr-0 mt-1" size="sm" v-on:click="submitImage()">Save / Update</b-button>
-      </b-form>
-      <!----------   Description    ------------->
-      <b-form-group class="text-left" label="Description" label-for="textarea-lazy">
+        <b-card-sub-title class="text-left ml- mb-2">ID</b-card-sub-title>
+        <b-card-text class="text-left ml-4 mb-2">{{ this.$parent.user.userId }}</b-card-text> </b-card>
+        <b-form >
+            <b-form-file name="image" v-model="img" class="mt-3" plain  v-on:change="handleFileUpload()"></b-form-file>
+            <b-button class="mr-0 mt-1" size="sm" v-on:click="submitImage()">Save / Update</b-button>
+            <!--      <p type="submit" @click="submitImage()">Change</p>-->
+        </b-form>
+
+        <!----------   Description    ------------->
+        <h4 class="text-left">Description</h4>
+        <b-form-group class="text-left"  label-for="textarea-lazy">
+
         <b-form-textarea
           v-model="desc"
           id="textarea-lazy"
