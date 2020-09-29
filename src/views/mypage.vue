@@ -4,18 +4,34 @@
 <!--      <h2 class="title">STUDENT</h2>-->
     </div>
 
+    <!----------   user info    ------------->
     <div class="mt-4">
-      <b-card
-          :img-src="imgUrl"
-          @error="imgUrlAlt"
+      <b-card>
+        <b-card-title class="text-center ml-5 mb-0">{{ this.$parent.user.user }}</b-card-title>
+        <b-form-group label="Vilken LIA söker du?" class="float-right">
+          <b-form-checkbox
+                  id="checkbox-1"
+                  v-model="lia1"
+                  name="checkbox-1"
+                  value="accepted"
+                  unchecked-value="not_accepted">
+            LIA 1
+          </b-form-checkbox>
+          <b-form-checkbox
+                  id="checkbox-2"
+                  v-model="lia2"
+                  name="checkbox-2"
+                  value="accepted"
+                  unchecked-value="not_accepted"
+          >
+            LIA 2
+          </b-form-checkbox>
 
-          img-left
-          class="mb-3"
-      >
-
-          <!----------   user info    ------------->
-        <b-card-title class="text-center mr-5">{{ this.$parent.user.user }}</b-card-title>
-        <b-card-sub-title class="text-left ml-2 mb-2">Ålder</b-card-sub-title>
+          <!--<b-form-radio name="radios-stacked" size="sm">LIA-1</b-form-radio>
+          <b-form-radio name="radios-stacked" size="sm">LIA-2</b-form-radio>-->
+        </b-form-group>
+        <b-card-img id="img" :src="imgUrl" alt="alt image" class="mb-3 mr-3 float-left"></b-card-img>
+        <b-card-sub-title class="text-left mt-1 ml-2 mb-2">Ålder</b-card-sub-title>
         <b-card-text class="text-left ml-4 mb-2">{{ this.$parent.user.age }}</b-card-text>
         <b-card-sub-title class="text-left ml-2 mb-2">Klass</b-card-sub-title>
         <b-card-text class="text-left ml-4 mb-2">{{ this.$parent.user.class }}</b-card-text>
@@ -32,40 +48,43 @@
         <!----------   Description    ------------->
         <h4 class="text-left">Description</h4>
         <b-form-group class="text-left"  label-for="textarea-lazy">
-        <b-form-textarea
-            v-model="desc"
-            id="textarea-lazy"
-            :placeholder="this.$parent.user.description"
-            lazy-formatter
 
+        <b-form-textarea
+          v-model="desc"
+          id="textarea-lazy"
+          :placeholder="this.$parent.user.description"
+          lazy-formatter
         ></b-form-textarea>
         <b-button class="mr-0 mt-1" size="sm" @click="saveDescription()">Save / Update</b-button>
       </b-form-group>
 
-       <!----------   CV    ------------->
-       <h4 class="text-left">CV</h4>
-        <h6 class="text-left" v-if="checkCv()"><a href="#"  v-on:click="readResume()">Click to see your previously uploaded Cv</a></h6>
+      <!----------   CV    ------------->
+      <h4 class="text-left">CV</h4>
+      <h6 class="text-left" v-if="checkCv()">
+        <a href="#" v-on:click="readResume()">Click to see your previously uploaded Cv</a>
+      </h6>
 
-        <b-form-group id="image-group">
-        <b-form-file name="resume"
-            accept=".pdf"
-            enctype="multipart/form-data"
-            ref="file"
-            v-model="file"
-            v-on:change="handleFileUpload()"
-            placeholder="Select a pdf file or drop it here ..."
-            drop-placeholder="Släpp .pdf filen här som ..."
+      <b-form-group id="image-group">
+        <b-form-file
+          name="resume"
+          accept=".pdf"
+          enctype="multipart/form-data"
+          ref="file"
+          v-model="file"
+          v-on:change="handleFileUpload()"
+          placeholder="Select a pdf file or drop it here ..."
+          drop-placeholder="Släpp .pdf filen här som ..."
         />
         <b-button class="mr-0 mt-1" size="sm" v-on:click="submitFile()">Save / Update</b-button>
-       </b-form-group>
-        <!--<div v-show="checkResume">
+      </b-form-group>
+      <!--<div v-show="checkResume">
             <b-button  v-on:click="readResume()"> My CV</b-button>
-        </div>-->
-       <div v-if="fileUploaded">
-     {{ this.file.name }} is uploaded
-<!--        <b-button class="mr-0 mt-1" size="sm" v-on:click="showModal">Open</b-button>-->
+      </div>-->
+      <div v-if="fileUploaded">
+        {{ this.file.name }} is uploaded
+        <!--        <b-button class="mr-0 mt-1" size="sm" v-on:click="showModal">Open</b-button>-->
       </div>
-   <!--     <div>
+      <!--     <div>
             <b-modal ref="my-modal" hide-footer>
                 <div class="d-block text-center">
                     <b-embed
@@ -75,48 +94,54 @@
                     ></b-embed>
                 </div>
             </b-modal>
-        </div>-->
+      </div>-->
 
+      <!----------   cover letter    ------------->
+      <h4 class="text-left">Cover Letter</h4>
+      <h6 class="text-left" v-if="checkCoverletter()">
+        <a
+          href="#"
+          v-on:click="readCoverLetter()"
+        >Click to see your previously uploaded cover letter</a>
+      </h6>
 
-        <!----------   cover letter    ------------->
-        <h4 class="text-left">Cover Letter</h4>
-       <h6 class="text-left" v-if="checkCoverletter()"><a href="#"  v-on:click="readCoverLetter()">Click to see your previously uploaded cover letter </a></h6>
-
-        <b-form-file name="coverletter"
-                   accept=".pdf"
-                   enctype="multipart/form-data"
-                   ref="file"
-                   v-model="fileCoverLetter"
-                   v-on:change="handleFileUpload()"
-                   placeholder="Select a pdf file or drop it here ..."
-                   drop-placeholder="Släpp .pdf filen här som ..."
+      <b-form-file
+        name="coverletter"
+        accept=".pdf"
+        enctype="multipart/form-data"
+        ref="file"
+        v-model="fileCoverLetter"
+        v-on:change="handleFileUpload()"
+        placeholder="Select a pdf file or drop it here ..."
+        drop-placeholder="Släpp .pdf filen här som ..."
       ></b-form-file>
-        <b-button class="mr-0 mt-1" size="sm" v-on:click="submitCoverLetter()">Save / Update</b-button>
-         <div v-if="coverletterUploaded">
+      <b-button class="mr-0 mt-1" size="sm" v-on:click="submitCoverLetter()">Save / Update</b-button>
+      <div v-if="coverletterUploaded">
         {{ this.fileCoverLetter.name }} is uploaded
-
-<!--        <b-button class="mr-0 mt-1" size="sm" v-on:click="readCoverLetter()">Open</b-button>-->
+        <!--        <b-button class="mr-0 mt-1" size="sm" v-on:click="readCoverLetter()">Open</b-button>-->
       </div>
 
+      <!----------   certificate    ------------->
+      <h4 class="text-left">Certificate</h4>
+      <h6 class="text-left" v-if="checkCertificate()">
+        <a href="#" v-on:click="readCertificate()">Click to see your previously uploaded certificate</a>
+      </h6>
 
-        <!----------   certificate    ------------->
-        <h4 class="text-left">Certificate</h4>
-        <h6 class="text-left" v-if="checkCertificate()"><a href="#" v-on:click="readCertificate()">Click to see your previously uploaded certificate</a></h6>
-
-        <b-form-file name="certificate"
-                   accept=".pdf"
-                   enctype="multipart/form-data"
-                   ref="file"
-                   v-model="fileBetyg"
-                   v-on:change="handleFileUpload()"
-                   placeholder="Select a pdf file or drop it here ..."
-                   drop-placeholder="Släpp .pdf filen här som ..."
+      <b-form-file
+        name="certificate"
+        accept=".pdf"
+        enctype="multipart/form-data"
+        ref="file"
+        v-model="fileBetyg"
+        v-on:change="handleFileUpload()"
+        placeholder="Select a pdf file or drop it here ..."
+        drop-placeholder="Släpp .pdf filen här som ..."
       ></b-form-file>
 
       <b-button class="mr-0 mt-1" size="sm" v-on:click="submitCertificate()">Save / Update</b-button>
       <div v-if="betygUploaded">
         {{ this.fileBetyg.name }} is uploaded
-<!--        <b-button class="mr-0 mt-1" size="sm" v-on:click="readCertificate()">Open</b-button>-->
+        <!--        <b-button class="mr-0 mt-1" size="sm" v-on:click="readCertificate()">Open</b-button>-->
       </div>
     </div>
   </b-container>
@@ -133,30 +158,26 @@ export default {
     return {
       desc: "",
       file: null,
-      fileCoverLetter: null,
-      fileBetyg: null,
       fileUploaded: false,
       betygUploaded: false,
       coverletterUploaded: false,
       message: "test",
-      form_img: "test.png",
       img: null,
-      respoCertificate:null,
-      respoCoverLetter:null,
-      respoCv:null,
-      imgUrl:"http://127.0.0.1:3000/api/uploads/images/"+this.$parent.user.userId,
+      respoCertificate: null,
+      respoCoverLetter: null,
+      respoCv: null,
+      imgUrl:
+        "http://127.0.0.1:3000/api/uploads/images/" + this.$parent.user.userId,
+      lia1: "not_accepted",
+      lia2: "not_accepted"
 
-          // "http://127.0.0.1:3000/api/uploads/images/" + this.$parent.user.userId+"image.jpg"
-
-
-
-  };
+      // "http://127.0.0.1:3000/api/uploads/images/" + this.$parent.user.userId+"image.jpg"
+    };
   },
-        methods: {
-
+  methods: {
     imgUrlAlt(event) {
-                event.target.src = "require('../assets/test.jpg')"
-            },
+      event.target.src = "require('../assets/test.jpg')";
+    },
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
     },
@@ -166,12 +187,15 @@ export default {
       formData.append("resume", this.file);
       try {
         if (this.file != "") {
-          axios.post("http://127.0.0.1:3000/api/upload/resume/" + this.$parent.user.userId, formData);
+          axios.post(
+            "http://127.0.0.1:3000/api/upload/resume/" +
+              this.$parent.user.userId,
+            formData
+          );
           this.message = "uploaded";
           this.fileUploaded = true;
         } else {
           alert("Choose a File ");
-
         }
       } catch (e) {
         this.message = "Sth went wrong";
@@ -183,13 +207,16 @@ export default {
       formData.append("coverletter", this.fileCoverLetter);
       try {
         if (this.fileCoverLetter != "") {
-          axios.post("http://127.0.0.1:3000/api/upload/coverletter/" + this.$parent.user.userId, formData);
+          axios.post(
+            "http://127.0.0.1:3000/api/upload/coverletter/" +
+              this.$parent.user.userId,
+            formData
+          );
           this.message = "uploaded";
           this.coverletterUploaded = true;
           alert("cover letter uploaded");
         } else {
           alert("Choose a File ");
-
         }
       } catch (e) {
         this.message = "Sth went wrong";
@@ -201,47 +228,52 @@ export default {
       formData.append("certificate", this.fileBetyg);
       try {
         if (this.fileBetyg != "") {
-          axios.post("http://127.0.0.1:3000/api/upload/certificate/" + this.$parent.user.userId, formData);
+          axios.post(
+            "http://127.0.0.1:3000/api/upload/certificate/" +
+              this.$parent.user.userId,
+            formData
+          );
           this.message = "uploaded";
           this.betygUploaded = true;
           alert("cover letter uploaded");
         } else {
           alert("Choose a File ");
-
         }
       } catch (e) {
         this.message = "Sth went wrong";
       }
     },
 
-
-          async submitImage() {
-            const formData = new FormData();
-            formData.append("image", this.img);
-            try {
-              if (this.file != "") {
-                axios.post("http://127.0.0.1:3000/api/upload/image/" + this.$parent.user.userId, formData);
-                this.message = "uploaded";
-                this.fileUploaded = true;
-              } else {
-                alert("Choose a File ");
-
-              }
-            } catch (e) {
-              this.message = "Sth went wrong";
-            }
-          },
+    async submitImage() {
+      const formData = new FormData();
+      formData.append("image", this.img);
+      try {
+        if (this.file != "") {
+          axios.post(
+            "http://127.0.0.1:3000/api/upload/image/" +
+              this.$parent.user.userId,
+            formData
+          );
+          this.message = "uploaded";
+          this.fileUploaded = true;
+        } else {
+          alert("Choose a File ");
+        }
+      } catch (e) {
+        this.message = "Sth went wrong";
+      }
+    },
 
     async saveDescription() {
       const requestOptions = {
         method: "PUT",
         mode: "cors",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({description: this.desc})
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ description: this.desc })
       };
       const response = await fetch(
-          "http://localhost:3000/api/users/" + this.$parent.user.userId,
-          requestOptions
+        "http://localhost:3000/api/users/" + this.$parent.user.userId,
+        requestOptions
       );
       console.log(this.$parent.user.userId);
       const data = await response.json();
@@ -251,30 +283,39 @@ export default {
     },
 
     readResume() {
-        window.open("http://localhost:3000/api/uploads/resumes/" + this.$parent.user.userId, 'popup','width=600,height=750'); //to open in new tab
+      window.open(
+        "http://localhost:3000/api/uploads/resumes/" + this.$parent.user.userId,
+        "popup",
+        "width=600,height=750"
+      ); //to open in new tab
       //to open in new tab
     },
 
     readCoverLetter() {
-      window.open("http://localhost:3000/api/uploads/coverletters/" + this.$parent.user.userId, 'popup','width=600,height=750'); //to open in new tab
+      window.open(
+        "http://localhost:3000/api/uploads/coverletters/" +
+          this.$parent.user.userId,
+        "popup",
+        "width=600,height=750"
+      ); //to open in new tab
     },
 
-
     readCertificate() {
-      window.open("http://localhost:3000/api/uploads/certificates/" + this.$parent.user.userId, 'popup','width=600,height=750'); //to open in new tab
+      window.open(
+        "http://localhost:3000/api/uploads/certificates/" +
+          this.$parent.user.userId,
+        "popup",
+        "width=600,height=750"
+      ); //to open in new tab
     },
 
     showModal() {
-              this.$refs["my-modal"].show();
-          },
-
-    hideModal() {
-              this.$refs["my-modal"].hide();
-          },
-    image() {
-      this.form_img = this.img.name;
+      this.$refs["my-modal"].show();
     },
-    checkCertificate () {
+    hideModal() {
+      this.$refs["my-modal"].hide();
+    },
+    checkCertificate() {
       /*        axios.get("http://localhost:3000/api/uploads/certificates/" + this.$parent.user.userId)
                   .then(response => (this.respoCertificate = response))
                   .catch (function (error) {
@@ -284,38 +325,47 @@ export default {
         if(this.respoCertificate===null){
                    return false
                }else { return true}*/
-
-        // axios.get("http://localhost:3000/api/uploads/certificates/" + this.$parent.user.userId)
-        //     .then(response => (this.respoCertificate = response.status))
-        //     .catch (function (error) {
-        //         console.log(error);
-        //     });
-        //
-        // if(this.respoCertificate===200){
-        //     return true
-        // }else { return false}
+      // axios.get("http://localhost:3000/api/uploads/certificates/" + this.$parent.user.userId)
+      //     .then(response => (this.respoCertificate = response.status))
+      //     .catch (function (error) {
+      //         console.log(error);
+      //     });
+      //
+      // if(this.respoCertificate===200){
+      //     return true
+      // }else { return false}
     },
-    checkCoverletter () {
-         /*     axios.get("http://localhost:3000/api/uploads/coverletters/" + this.$parent.user.userId)
+    checkCoverletter() {
+      /*     axios.get("http://localhost:3000/api/uploads/coverletters/" + this.$parent.user.userId)
                   .then(response => (this.respoCoverLetter = response))
 
               if(this.respoCoverLetter===null){
                   return false
               }else { return true}
 */
+    },
+    checkCv() {
+      axios
+        .get(
+          "http://localhost:3000/api/uploads/resumes/" +
+            this.$parent.user.userId
+        )
+        .then(response => (this.respoCv = response.status));
 
-          },
-    checkCv () {
-              axios.get("http://localhost:3000/api/uploads/resumes/" + this.$parent.user.userId)
-                  .then(response => (this.respoCv = response.status))
-
-              if(this.respoCv===null){
-                  return false
-              }else { return true}
-
-          },
-
+      if (this.respoCv === null) {
+        return false;
+      } else {
+        return true;
+      }
+    }
   }
-}
+};
 </script>
+
+<style>
+#img {
+  width: 200px;
+  height: 200px;
+}
+</style>
 
