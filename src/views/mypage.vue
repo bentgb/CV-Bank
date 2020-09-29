@@ -8,6 +8,10 @@
     <div class="mt-4">
       <b-card>
         <b-card-title class="text-center ml-5 mb-0">{{ this.$parent.user.user }}</b-card-title>
+        <b-form-group label="Vilken LIA söker du?" class="float-right">
+          <b-form-radio name="radios-stacked" size="sm">LIA-1</b-form-radio>
+          <b-form-radio name="radios-stacked" size="sm">LIA-2</b-form-radio>
+        </b-form-group>
         <b-card-img id="img" :src="imgUrl" alt="alt image" class="mb-3 mr-3 float-left"></b-card-img>
         <b-card-sub-title class="text-left mt-1 ml-2 mb-2">Ålder</b-card-sub-title>
         <b-card-text class="text-left ml-4 mb-2">{{ this.$parent.user.age }}</b-card-text>
