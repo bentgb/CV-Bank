@@ -9,8 +9,26 @@
       <b-card>
         <b-card-title class="text-center ml-5 mb-0">{{ this.$parent.user.user }}</b-card-title>
         <b-form-group label="Vilken LIA söker du?" class="float-right">
-          <b-form-radio name="radios-stacked" size="sm">LIA-1</b-form-radio>
-          <b-form-radio name="radios-stacked" size="sm">LIA-2</b-form-radio>
+          <b-form-checkbox
+                  id="checkbox-1"
+                  v-model="lia1"
+                  name="checkbox-1"
+                  value="accepted"
+                  unchecked-value="not_accepted">
+            LIA 1
+          </b-form-checkbox>
+          <b-form-checkbox
+                  id="checkbox-2"
+                  v-model="lia2"
+                  name="checkbox-2"
+                  value="accepted"
+                  unchecked-value="not_accepted"
+          >
+            LIA 2
+          </b-form-checkbox>
+
+          <!--<b-form-radio name="radios-stacked" size="sm">LIA-1</b-form-radio>
+          <b-form-radio name="radios-stacked" size="sm">LIA-2</b-form-radio>-->
         </b-form-group>
         <b-card-img id="img" :src="imgUrl" alt="alt image" class="mb-3 mr-3 float-left"></b-card-img>
         <b-card-sub-title class="text-left mt-1 ml-2 mb-2">Ålder</b-card-sub-title>
@@ -149,7 +167,9 @@ export default {
       respoCoverLetter: null,
       respoCv: null,
       imgUrl:
-        "http://127.0.0.1:3000/api/uploads/images/" + this.$parent.user.userId
+        "http://127.0.0.1:3000/api/uploads/images/" + this.$parent.user.userId,
+      lia1: "not_accepted",
+      lia2: "not_accepted"
 
       // "http://127.0.0.1:3000/api/uploads/images/" + this.$parent.user.userId+"image.jpg"
     };
