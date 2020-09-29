@@ -253,8 +253,8 @@ app.post("/api/upload/image/:id", upload.single("image"), (req, res) =>{
 
 
 app.post("/api/users/login", (req, res, next) => {
-    var sql = "select userId, user,passCODE,age,class,userRole, description, userEMAIL, CVpath from USERS WHERE passCode = ? AND user = ?";
-    var params = [req.body.pass,req.body.user];
+    var sql = "select userId, user,passCODE,age,class,userRole, description, userEMAIL, CVpath from USERS WHERE passCode = ? AND userEMAIL = ?";
+    var params = [req.body.pass,req.body.userEMAIL];
     db.all(sql, params, (err, rows) => {
         if (err) {
             res.status(400).json({"error":err.message});

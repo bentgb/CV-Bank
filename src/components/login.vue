@@ -60,7 +60,7 @@ export default {
           mode: "cors",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            user: this.input.name,
+            userEMAIL: this.input.name,
             pass: this.input.password
           })
         };
@@ -72,7 +72,7 @@ export default {
 
         if (data.length === 0) {
           alert("Användarnamn och / eller lösenord är felaktigt!");
-        } else if (data[0].user === this.input.name) {
+        } else if (data[0].userEMAIL === this.input.name) {
           this.$emit("authenticated", true);
           this.$emit("user", data[0]);
           this.userType();
