@@ -1,11 +1,11 @@
 <template>
   <b-container>
     <div class="section content-title-group">
-      <h2 class="title mt-5 mb-5"> Testare </h2>
+      <h2 class="title mt-5 mb-5"> webbutvecklare </h2>
     </div>
 
     <div class="mt-5">
-      <div class="row" >
+      <div class="row d-flex justify-content-center" >
         <b-list-group style="max-width: 1100px;" display="center">
           <b-list-group-item
               class="d-flex align-items-center"

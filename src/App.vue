@@ -11,7 +11,7 @@
     <section class="item3">
       <div class="item3-body">
         <div id="nav">
-          <router-link v-if="authenticated" to="/mypage" replace>Min sida</router-link>
+          <!--            <router-link v-if="authenticated" to="/mypage" replace>Min sida</router-link>-->
           <router-link
             v-if="authenticated"
             to="/mypage"
