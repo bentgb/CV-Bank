@@ -45,7 +45,7 @@
                         method: "POST",
                         mode: 'cors',
                         headers: {"Content-Type": "application/json"},
-                        body: JSON.stringify({user: this.input.name, pass: this.input.password})
+                        body: JSON.stringify({userEMAIL: this.input.name, pass: this.input.password})
                     };
                     const response = await fetch("http://localhost:3000/api/users/login", requestOptions);
                     const data = await response.json();
@@ -53,7 +53,7 @@
                     if (data.length === 0) {
                         alert("Användarnamn och / eller lösenord är felaktigt!");
                     }
-                    else if(data[0].user === this.input.name) {
+                    else if(data[0].userEMAIL === this.input.name) {
                         this.$emit("authenticated", true);
                         this.$emit("user", data[0]);
                         this.userType();
