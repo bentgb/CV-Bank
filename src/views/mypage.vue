@@ -1,7 +1,7 @@
 <template xmlns:http="http://www.w3.org/1999/xhtml">
   <b-container>
     <div class="section content-title-group">
-      <h2 class="title">STUDENT</h2>
+<!--      <h2 class="title">STUDENT</h2>-->
     </div>
 
     <div class="mt-4">
@@ -30,7 +30,8 @@
         </b-form>
 
         <!----------   Description    ------------->
-        <b-form-group class="text-left" label="Description" label-for="textarea-lazy">
+        <h4 class="text-left">Description</h4>
+        <b-form-group class="text-left"  label-for="textarea-lazy">
         <b-form-textarea
             v-model="desc"
             id="textarea-lazy"

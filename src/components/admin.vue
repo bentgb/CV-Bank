@@ -91,8 +91,7 @@
 .custom{
     width:400px;
     height: 100px;
-    margin-left: 15px;
-    margin-bottom: 15px;
+    margin-left: 14px;
     font-size: 23px;
 
 }
