@@ -43,7 +43,7 @@ app.listen(HTTP_PORT, () => {
     console.log("Server running on port: " + HTTP_PORT);
 });
 app.get('/api/users', (request, response, next) => {
-    const sql = 'select * from users where userRole <> ?';
+    const sql = 'select * from users where userRole <> ? order by user';
     const params = ['admin'];
     db.all(sql, params, (err, rows) => {
         if (err) {
