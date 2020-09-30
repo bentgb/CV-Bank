@@ -1,7 +1,7 @@
 <template xmlns:http="http://www.w3.org/1999/xhtml">
   <b-container>
     <div class="section content-title-group">
-<!--      <h2 class="title">STUDENT</h2>-->
+      <!--      <h2 class="title">STUDENT</h2>-->
     </div>
 
     <!----------   user info    ------------->
@@ -10,25 +10,19 @@
         <b-card-title class="text-center ml-5 mb-0">{{ this.$parent.user.user }}</b-card-title>
         <b-form-group label="Vilken LIA söker du?" class="float-right">
           <b-form-checkbox
-                  id="checkbox-1"
-                  v-model="lia1"
-                  name="checkbox-1"
-                  value="accepted"
-                  unchecked-value="not_accepted">
-            LIA 1
-          </b-form-checkbox>
+            id="checkbox-1"
+            v-model="lia1"
+            name="checkbox-1"
+            value="accepted"
+            unchecked-value="not_accepted"
+          >LIA 1</b-form-checkbox>
           <b-form-checkbox
-                  id="checkbox-2"
-                  v-model="lia2"
-                  name="checkbox-2"
-                  value="accepted"
-                  unchecked-value="not_accepted"
-          >
-            LIA 2
-          </b-form-checkbox>
-
-          <!--<b-form-radio name="radios-stacked" size="sm">LIA-1</b-form-radio>
-          <b-form-radio name="radios-stacked" size="sm">LIA-2</b-form-radio>-->
+            id="checkbox-2"
+            v-model="lia2"
+            name="checkbox-2"
+            value="accepted"
+            unchecked-value="not_accepted"
+          >LIA 2</b-form-checkbox>
         </b-form-group>
         <b-card-img id="img" :src="imgUrl" alt="alt image" class="mb-3 mr-3 float-left"></b-card-img>
         <b-card-sub-title class="text-left mt-1 ml-2 mb-2">Ålder</b-card-sub-title>
@@ -38,17 +32,17 @@
         <b-card-sub-title class="text-left ml-2 mb-2">E-post</b-card-sub-title>
         <b-card-text class="text-left ml-4 mb-2">{{ this.$parent.user.userEMAIL }}</b-card-text>
         <b-card-sub-title class="text-left ml- mb-2">ID</b-card-sub-title>
-        <b-card-text class="text-left ml-4 mb-2">{{ this.$parent.user.userId }}</b-card-text> </b-card>
-        <b-form >
-            <b-form-file name="image" v-model="img" class="mt-3" plain  v-on:change="handleFileUpload()"></b-form-file>
-            <b-button class="mr-0 mt-1" size="sm" v-on:click="submitImage()">Save / Update</b-button>
-            <!--      <p type="submit" @click="submitImage()">Change</p>-->
-        </b-form>
+        <b-card-text class="text-left ml-4 mb-2">{{ this.$parent.user.userId }}</b-card-text>
+      </b-card>
+      <b-form>
+        <b-form-file name="image" v-model="img" class="mt-3" plain v-on:change="handleFileUpload()"></b-form-file>
+        <b-button class="mr-0 mt-1" size="sm" v-on:click="submitImage()">Save / Update</b-button>
+        <!--      <p type="submit" @click="submitImage()">Change</p>-->
+      </b-form>
 
-        <!----------   Description    ------------->
-        <h4 class="text-left">Description</h4>
-        <b-form-group class="text-left"  label-for="textarea-lazy">
-
+      <!----------   Description    ------------->
+      <h4 class="text-left">Description</h4>
+      <b-form-group class="text-left" label-for="textarea-lazy">
         <b-form-textarea
           v-model="desc"
           id="textarea-lazy"
