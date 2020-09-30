@@ -3,7 +3,9 @@
     <section class="item1">
       <div class="item1-body">
         <div class="logo-box">
-          <img src="./assets/logo.svg" alt="Logo" class="logo-img" />
+          <router-link to="/">
+            <img src="./assets/logo.svg" alt="Logo" class="logo-img" />
+          </router-link>
         </div>
       </div>
     </section>
