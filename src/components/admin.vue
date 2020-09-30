@@ -89,3 +89,14 @@ export default {
   name: "admin"
 };
 </script>
+
+<style scoped>
+.custom{
+    width:400px;
+    height: 100px;
+    margin-left: 14px;
+    font-size: 23px;
+
+}
+</style>
+
