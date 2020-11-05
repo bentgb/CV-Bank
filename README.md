@@ -1,4 +1,4 @@
-# cvbank is a project that I contributed as part of my LIA. In this project we created an app that students can use to upload their CVs in pdf format and enable administrators to get the list of student CVs. 
+# cvbank is a project that I contributed as part of my LIA. In this project we created an app that enable students to upload their CVs in pdf format and enable administrators to get the list of student CVs. 
 
 ## Project setup
 ```
